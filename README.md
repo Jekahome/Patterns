@@ -47,7 +47,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 Если API между типами не меняется — меняется только поведение — тогда лучше использовать **Strategy Pattern**.
 
-## Rust idioms 
+![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Rust%20idioms.png "Rust idioms")
 
 Рекомендации, которым следует следовать при кодировании. Это согласованные нормы общества. Нарушать их следует только в том случае, если у вас есть для этого веская причина.
 
@@ -57,7 +57,8 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 [Rust idioms rust-unofficial github](https://github.com/Jekahome/RustDesignPatterns/tree/main/src/idioms)
 
-## Anti patterns 
+
+![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Anti%20patterns.png "Anti patterns")
 
 Методы решения распространенных проблем при кодировании. Однако, хотя шаблоны проектирования дают нам преимущества, антишаблоны создают больше проблем.
 

@@ -95,7 +95,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 [dry-kiss-yagni-principles](https://henriquesd.medium.com/dry-kiss-yagni-principles-1ce09d9c601f)
 
 
-## Design patterns 
+## <span style="color:red">Design patterns</span>  
 
 Методы решения распространенных проблем при кодировании.
 

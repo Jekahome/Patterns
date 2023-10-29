@@ -110,7 +110,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 ## Design patterns
 
-![This is an alt text.](/Design patterns.png "This is a sample image.")
+![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Design%20patterns.png "This is a sample image.")
 
 Методы решения распространенных проблем при кодировании.
 

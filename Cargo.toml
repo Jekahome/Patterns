@@ -1,0 +1,32 @@
+[package]
+name = "Patterns"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[example]]
+name = "type_safety_typestate_1"
+path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.1.typestates.rs"
+
+[[example]]
+name = "type_safety_typestate_2"
+path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.2.typestates.rs"
+
+[[example]]
+name = "type_safety_typestate_3"
+path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.3.typestates.rs"
+
+[[example]]
+name = "type_safety_typestate_4"
+path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.4.typestates.rs"
+
+[[example]]
+name = "type_safety_typestate_5"
+path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.5.typestates.rs"
+
+[[example]]
+name = "mem_replace"
+path ="src/idioms/2.Mem_replace/mem_replace.rs"
+
+[dependencies]

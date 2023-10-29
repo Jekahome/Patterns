@@ -61,7 +61,8 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 Методы решения распространенных проблем при кодировании. Однако, хотя шаблоны проектирования дают нам преимущества, антишаблоны создают больше проблем.
 
-## Design principles 
+
+![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Design%20principles.png "Design principles")
 
 ### Design principles: SOLID
 
@@ -108,7 +109,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 [dry-kiss-yagni-principles](https://henriquesd.medium.com/dry-kiss-yagni-principles-1ce09d9c601f)
 
 
-## ![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Design%20patterns.png "Design patterns")
+![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Design%20patterns.png "Design patterns")
 
 Методы решения распространенных проблем при кодировании.
 

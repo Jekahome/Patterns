@@ -1,54 +1,8 @@
-Куда складывать:
-- Google Диск Exel Manual/Rust(Patterns/Algorithms)
-- Google Диск Exel Manual/Patterns
-- GitHub Jekahome/Pattrens
-
-Источники:
-- книги ../DesignPatterns_AndriyBuday
-- книги ../Design-Patterns.md
-- книги ../Разработка интерфейсов.паттерны проектирования.Дженифер Тидвелл
-- книги ../Head_First_Паттерны_проектирования_2022_Эрик_Фримен,_Элизабет_Робсон
-- код ../Patterns_Others_lang
-- код ../Patterns_Rust_PHP_TypeScript
-
-[Rust Design Patterns](https://rust-unofficial.github.io/patterns/)
-
-
-[Rust Design Patterns rust-unofficial](https://github.com/rust-unofficial/patterns)
-[Rust Design Patterns refactoring.guru](https://refactoring.guru/ru/design-patterns/rust)
- 
-
-[Реализация конечного автомата (переходы между состояниями)](https://hoverbear.org/blog/rust-state-machine-pattern/)
-
-[шаблон Состояние (+exel example)](https://doc.rust-lang.ru/book/ch17-03-oo-design-patterns.html)
-
-### ООП паттерны
-[Rust Design Patterns](https://chercher.tech/rust/observer-design-pattern-rust)
-[Паттерны проектирования](http://design-pattern.ru/patterns/)
-[Каталог шаблонов архитектуры корпоративных приложений](https://martinfowler.com/eaaCatalog/index.html)
-
-
-[Паттерны ООП в метафорах](https://habr.com/ru/articles/136766/)
-
-[Что такое анти-паттерны?](https://habr.com/ru/articles/59005/)
-
-
-### DesignPatternsPHP
-[DesignPatternsPHP 1](https://designpatternsphp.readthedocs.io/ru/latest/index.html)
-[DesignPatternsPHP github](https://github.com/domnikl/DesignPatternsPHP)
-[DesignPatternsPHP 2](https://dron.by/)
-
-
-[«Паттерны» функционального программирования](https://habr.com/ru/articles/337880/)
-
-### ------------------------------------------------------------------
-
-### Что такое паттерны, зачем и почему они полезны, что дают?
+### Что такое паттерны, зачем и почему?
 
 Способ решения часто встречающихся задач. 
 Они делают наше программное обеспечение более модульным, удобным в сопровождении и расширяемым. 
 Более того, эти шаблоны предоставляют разработчикам общий язык, что делает их отличным инструментом для эффективного общения при решении проблем в группах.
-
 
 
 ### Подходят ли ООП паттерны для Rust?
@@ -91,26 +45,18 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 ### [Rust patterns](https://rust-unofficial.github.io/patterns/)
 
-**Rust idioms** : рекомендации, которым следует следовать при кодировании. Это согласованные нормы общества. Нарушать их следует только в том случае, если у вас есть для этого веская причина.
+### **Rust idioms** : рекомендации, которым следует следовать при кодировании. Это согласованные нормы общества. Нарушать их следует только в том случае, если у вас есть для этого веская причина.
 [Rust idioms rust-incubator](https://github.com/instrumentisto/rust-incubator/tree/main/2_idioms)
 [Rust idioms rust-unofficial](https://rust-unofficial.github.io/patterns/idioms/index.html)
 [Rust idioms rust-unofficial github](https://github.com/Jekahome/RustDesignPatterns/tree/main/src/idioms)
 
-**Anti patterns** : методы решения распространенных проблем при кодировании. Однако, хотя шаблоны проектирования дают нам преимущества, антишаблоны создают больше проблем.
+### **Anti patterns** : методы решения распространенных проблем при кодировании. Однако, хотя шаблоны проектирования дают нам преимущества, антишаблоны создают больше проблем.
 
-**Design principles** : SOLID, KISS, DRY, YAGNI рекомендации написания кода.
+### **Design principles** : SOLID, KISS, DRY, YAGNI рекомендации написания кода.
 
-**Design patterns** : методы решения распространенных проблем при кодировании.
+### **Design patterns** : методы решения распространенных проблем при кодировании.
 
-
-
-**Принципы DDD и слоеной архитектуры, CQRS-ES**
-
-
-
-# Rust idioms
-
-...  
+### **Принципы DDD и слоеной архитектуры, CQRS-ES**
 
 
 # Design principles
@@ -123,6 +69,8 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 Принцип разделения интерфейсов (ISP) : «Многие клиентские интерфейсы лучше, чем один интерфейс общего назначения».
 Принцип инверсии зависимостей (DIP) : нужно «зависеть от абстракций, а не от конкретики».
 
+# Design patterns
+
 ### DRY (Не повторяйтесь) 
 
 «Каждая часть знаний должна иметь единственное, однозначное и авторитетное представление в системе»
@@ -131,14 +79,51 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 большинство систем работают лучше всего, если их сохранять простыми, а не усложнять; следовательно, простота должна быть ключевой целью проектирования, и следует избегать ненужной сложности.
 
-# Design patterns
-
-...
-
-# Anti patterns
-
-...
-
 ### CQRS-ES
 
 Разделение команд-запросов (CQS) «Функции не должны вызывать абстрактные побочные эффекты... только команды (процедуры) могут вызывать побочные эффекты». - Бертран Мейер: Объектно-ориентированное создание программного обеспечения
+
+--------------
+
+Куда складывать:
+- Google Диск Exel Manual/Rust(Patterns/Algorithms)
+- Google Диск Exel Manual/Patterns
+- GitHub Jekahome/Pattrens
+
+Источники:
+- книги ../DesignPatterns_AndriyBuday
+- книги ../Design-Patterns.md
+- книги ../Разработка интерфейсов.паттерны проектирования.Дженифер Тидвелл
+- книги ../Head_First_Паттерны_проектирования_2022_Эрик_Фримен,_Элизабет_Робсон
+- код ../Patterns_Others_lang
+- код ../Patterns_Rust_PHP_TypeScript
+
+[Rust Design Patterns](https://rust-unofficial.github.io/patterns/)
+
+
+[Rust Design Patterns rust-unofficial](https://github.com/rust-unofficial/patterns)
+[Rust Design Patterns refactoring.guru](https://refactoring.guru/ru/design-patterns/rust)
+ 
+
+[Реализация конечного автомата (переходы между состояниями)](https://hoverbear.org/blog/rust-state-machine-pattern/)
+
+[шаблон Состояние (+exel example)](https://doc.rust-lang.ru/book/ch17-03-oo-design-patterns.html)
+
+### ООП паттерны
+[Rust Design Patterns](https://chercher.tech/rust/observer-design-pattern-rust)
+[Паттерны проектирования](http://design-pattern.ru/patterns/)
+[Каталог шаблонов архитектуры корпоративных приложений](https://martinfowler.com/eaaCatalog/index.html)
+
+
+[Паттерны ООП в метафорах](https://habr.com/ru/articles/136766/)
+
+[Что такое анти-паттерны?](https://habr.com/ru/articles/59005/)
+
+
+### DesignPatternsPHP
+[DesignPatternsPHP 1](https://designpatternsphp.readthedocs.io/ru/latest/index.html)
+[DesignPatternsPHP github](https://github.com/domnikl/DesignPatternsPHP)
+[DesignPatternsPHP 2](https://dron.by/)
+
+
+[«Паттерны» функционального программирования](https://habr.com/ru/articles/337880/)

@@ -80,6 +80,9 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 [Rust idioms rust-unofficial github](https://github.com/Jekahome/RustDesignPatterns/tree/main/src/idioms)
 
+[Реализация конечного автомата (переходы между состояниями)](https://hoverbear.org/blog/rust-state-machine-pattern/)
+
+[шаблон Состояние](https://doc.rust-lang.ru/book/ch17-03-oo-design-patterns.html)
 
 ![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Anti%20patterns.png "Anti patterns")
 
@@ -447,14 +450,14 @@ Command и receiver исполнитель назначение команды �
 
 [Паттерны ООП в метафорах](https://habr.com/ru/articles/136766/)
 
+## Слоеная архитектура 
+
+...
+
 ## Принципы DDD 
 
 ...
 
-## Слоеная архитектура 
-
-...
- 
 
 ### CQRS-ES
 
@@ -472,10 +475,6 @@ CQRS — это стиль архитектуры, в котором опера�
 [Rust Design Patterns rust-unofficial](https://github.com/rust-unofficial/patterns)
 
 [Rust Design Patterns refactoring.guru](https://refactoring.guru/ru/design-patterns/rust)
-
-[Реализация конечного автомата (переходы между состояниями)](https://hoverbear.org/blog/rust-state-machine-pattern/)
-
-[шаблон Состояние (+exel example)](https://doc.rust-lang.ru/book/ch17-03-oo-design-patterns.html)
 
 ### ООП паттерны
 

@@ -52,13 +52,13 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 Рекомендации, которым следует следовать при кодировании. Это согласованные нормы общества. Нарушать их следует только в том случае, если у вас есть для этого веская причина.
 
-- Type safety (Newtype,Typestates)
+- Type safety (Newtype, Typestates) 
 
-- Mem replace
+- Mem replace (hook lifetime)
 
-- Bound impl
+- Bound impl (ограничение поведения)
 
-- Generic in type out
+- Generic in type out (абстракция аргументов)
 
 - Exhaustivity (проверка на полноту вариантов)
 
@@ -93,7 +93,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 - Золотой молоток (Golden hammer)
 
-- Мягкое кодирование (Soft code)/Жёсткое кодирование (Hard code)
+- Мягкое кодирование (Soft code)/ Жёсткое кодирование (Hard code)
 
 ![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Design%20principles.png "Design principles")
 

@@ -29,4 +29,8 @@ path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.5.typestates.rs"
 name = "mem_replace"
 path ="src/idioms/2.Mem_replace/mem_replace.rs"
 
+[[example]]
+name = "p_behavior_command"
+path ="src/patterns/behavior/command/src/main.rs"
+
 [dependencies]

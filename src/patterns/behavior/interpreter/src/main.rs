@@ -226,8 +226,8 @@ mod dummy_interpreter_asm {
 
     // Non-Terminal Expression
     // предоставляет логику интерпретации для выражения произведения
-    pub struct Multiply;
-    impl AbstractExpression for Multiply {
+    pub struct MultiplyExpression;
+    impl AbstractExpression for MultiplyExpression {
         fn interpret(&self, ctx: &mut Context) {
             if ctx.size() > 1 {
                 if let Some(left) = ctx.head() {
@@ -335,7 +335,7 @@ fn main() {
 
     let read_exp = ReadVarExpression::new(b);
     client.add(Box::new(read_exp));
-    let mul_exp = Multiply;
+    let mul_exp = MultiplyExpression;
     client.add(Box::new(mul_exp));
 
     client.interpret();

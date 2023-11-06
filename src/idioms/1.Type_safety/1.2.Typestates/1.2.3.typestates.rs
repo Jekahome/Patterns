@@ -11,7 +11,6 @@ struct ModerablePost<S>(Post, PhatomData<S>)
 
 #![allow(dead_code)]
 ///Вариант основан на преобразованим From и PhantomData
-
 use std::marker::PhantomData;
 use std::string::String;
 

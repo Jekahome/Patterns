@@ -1,11 +1,10 @@
- 
 /// Продвижение состояния обеспечивает enum
 
 /// Текущее состояние
 #[derive(Debug)]
 struct StateMachine<S> {
     shared_value: bool,
-    state: S
+    state: S,
 }
 
 /// Состояния
@@ -38,21 +37,21 @@ impl Factory {
             machine: StateMachineWrapper::New(StateMachine::new(true)),
         }
     }
-    fn get_state(&self) -> &StateMachineWrapper{
+    fn get_state(&self) -> &StateMachineWrapper {
         &self.machine
     }
-    fn get_state_str(&self) -> &str{
+    fn get_state_str(&self) -> &str {
         match &self.machine {
-            StateMachineWrapper::New(_) =>  "New" ,
-            StateMachineWrapper::Unmoderated(_) => "Unmoderated" ,
-            StateMachineWrapper::Published(_) => "Published" ,
-            StateMachineWrapper::Deleted(_) => "Deleted" ,
+            StateMachineWrapper::New(_) => "New",
+            StateMachineWrapper::Unmoderated(_) => "Unmoderated",
+            StateMachineWrapper::Published(_) => "Published",
+            StateMachineWrapper::Deleted(_) => "Deleted",
         }
     }
     fn is_end(&self) -> bool {
         match &self.machine {
             StateMachineWrapper::Deleted(_val) => true,
-            _ => false
+            _ => false,
         }
     }
 }
@@ -65,22 +64,30 @@ impl StateMachineWrapper {
             StateMachineWrapper::Unmoderated(val) => {
                 if val.shared_value == true {
                     StateMachineWrapper::Published(val.into())
-                }else{
+                } else {
                     StateMachineWrapper::Deleted(val.into())
                 }
-            },
+            }
             StateMachineWrapper::Published(val) => StateMachineWrapper::Deleted(val.into()),
-            StateMachineWrapper::Deleted(val) => StateMachineWrapper::Deleted(val.into())
+            StateMachineWrapper::Deleted(val) => StateMachineWrapper::Deleted(val.into()),
         };
         self
     }
     /// Изменить shared_value
-    fn set_shared(&mut self,shared_value: bool){
+    fn set_shared(&mut self, shared_value: bool) {
         match self {
-            StateMachineWrapper::New(val) =>{val.shared_value=shared_value; } ,
-            StateMachineWrapper::Unmoderated(val) =>{val.shared_value=shared_value; } ,
-            StateMachineWrapper::Published(val) => {val.shared_value=shared_value; } ,
-            StateMachineWrapper::Deleted(val)  => {val.shared_value=shared_value; }
+            StateMachineWrapper::New(val) => {
+                val.shared_value = shared_value;
+            }
+            StateMachineWrapper::Unmoderated(val) => {
+                val.shared_value = shared_value;
+            }
+            StateMachineWrapper::Published(val) => {
+                val.shared_value = shared_value;
+            }
+            StateMachineWrapper::Deleted(val) => {
+                val.shared_value = shared_value;
+            }
         };
     }
 }
@@ -90,7 +97,7 @@ impl StateMachine<New> {
     fn new(shared_value: bool) -> Self {
         StateMachine {
             shared_value: shared_value,
-            state: New{}
+            state: New {},
         }
     }
 }
@@ -99,7 +106,7 @@ impl From<StateMachine<New>> for StateMachine<Unmoderated> {
     fn from(_val: StateMachine<New>) -> StateMachine<Unmoderated> {
         StateMachine {
             shared_value: _val.shared_value,
-            state:Unmoderated{}
+            state: Unmoderated {},
         }
     }
 }
@@ -108,7 +115,7 @@ impl From<StateMachine<Unmoderated>> for StateMachine<Published> {
     fn from(_val: StateMachine<Unmoderated>) -> StateMachine<Published> {
         StateMachine {
             shared_value: _val.shared_value,
-            state:Published{}
+            state: Published {},
         }
     }
 }
@@ -117,7 +124,7 @@ impl From<StateMachine<Unmoderated>> for StateMachine<Deleted> {
     fn from(_val: StateMachine<Unmoderated>) -> StateMachine<Deleted> {
         StateMachine {
             shared_value: _val.shared_value,
-            state:Deleted{}
+            state: Deleted {},
         }
     }
 }
@@ -126,31 +133,31 @@ impl From<StateMachine<Published>> for StateMachine<Deleted> {
     fn from(_val: StateMachine<Published>) -> StateMachine<Deleted> {
         StateMachine {
             shared_value: _val.shared_value,
-            state:Deleted{}
+            state: Deleted {},
         }
     }
 }
 
-fn main(){
+fn main() {
     let mut the_factory = Factory::new();
 
     println!("\nПроход №1\n");
-    println!("state:{}\n",the_factory.get_state_str());// state:New
+    println!("state:{}\n", the_factory.get_state_str()); // state:New
     the_factory.machine = the_factory.machine.step();
-    println!("state:{}\n",the_factory.get_state_str());// state:Unmoderated
-    // the_factory.machine.set_shared(false);
+    println!("state:{}\n", the_factory.get_state_str()); // state:Unmoderated
+                                                         // the_factory.machine.set_shared(false);
     the_factory.machine = the_factory.machine.step();
-    println!("state:{}\n",the_factory.get_state_str());//state:Published
+    println!("state:{}\n", the_factory.get_state_str()); //state:Published
     the_factory.machine = the_factory.machine.step();
-    println!("state:{}\n",the_factory.get_state_str());// state:Deleted
+    println!("state:{}\n", the_factory.get_state_str()); // state:Deleted
     the_factory.machine = the_factory.machine.step();
-    println!("state:{}\n",the_factory.get_state_str());// state:Deleted
+    println!("state:{}\n", the_factory.get_state_str()); // state:Deleted
 
     println!("\nПроход №2\n");
     let mut the_factory = Factory::new();
     while the_factory.is_end() == false {
-        println!("state:{}\n",the_factory.get_state_str());
+        println!("state:{}\n", the_factory.get_state_str());
         the_factory.machine = the_factory.machine.step();
     }
-    println!("Step:{}\n","Deleted");
+    println!("Step:{}\n", "Deleted");
 }

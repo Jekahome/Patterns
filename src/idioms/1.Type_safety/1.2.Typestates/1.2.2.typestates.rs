@@ -1,6 +1,5 @@
 #![allow(dead_code)]
 ///Вариант основан на преобразованим From
-
 use std::string::String;
 
 mod post {
@@ -100,7 +99,7 @@ fn deny(post: Unmoderated) -> Deleted {
 
 fn delete(post: Published) -> Deleted {
     println!("Published -- \"delete()\" --> Deleted");
-   // Deleted::from(post)
+    // Deleted::from(post)
     post.into()
 }
 

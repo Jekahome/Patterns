@@ -100,6 +100,14 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 - Мягкое кодирование (Soft code)/ Жёсткое кодирование (Hard code)
 
+[Anti patterns sourcemaking.com](https://sourcemaking.com/antipatterns)
+
+- [Антипаттерны разработки программного обеспечения](https://sourcemaking.com/antipatterns/software-development-antipatterns)
+
+- [Антипаттерны архитектуры программного обеспечения](https://sourcemaking.com/antipatterns/software-architecture-antipatterns)
+
+- [Управление программными проектами](https://sourcemaking.com/antipatterns/software-project-management-antipatterns)
+
 ![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Design%20principles.png "Design principles")
 
 ### Design principles: SOLID
@@ -340,6 +348,36 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 [Command rust-unofficial.github.io](https://rust-unofficial.github.io/patterns/patterns/behavioural/command.html)
 
+- #### Interpreter	
+
+Известен как Little (Small) Language, позволяет создать **свой язык** для гибкости и простоты использования пользователем
+
+Design components:
+
+Abstract Expression - объявляет операцию interpret(), которую переопределяют все узлы (терминальные и нетерминальные) в AST.
+    класс абстрактного выражения определяет абстрактный интерфейс для языковых выражений. Он объявляет interpret()
+    метод, определяющий логику интерпретации выражений.
+
+Terminal Expression - (NumberExpression): реализует операцию interpret() для терминальных выражений.
+    классы терминальных выражений представляют собой элементарные строительные блоки языка. Они реализуют интерфейс
+    абстрактных выражений и обеспечивают логику интерпретации терминальных выражений.
+
+Non-Terminal Expression - (AdditionExpression, SubtractionExpression, and MultiplicationExpression):
+    реализует операцию interpret() для всех нетерминальных выражений.
+    классы нетерминальных выражений представляют собой составные выражения, состоящие из нескольких подвыражений.
+    Они также реализуют интерфейс абстрактных выражений и обеспечивают логику интерпретации составных выражений.
+
+Context - содержит информацию, которая является глобальной для интерпретатора.
+    класс контекста предоставляет любую необходимую информацию или состояние, необходимое для интерпретации выражений.
+    Он сохраняет глобальную информацию, разделяемую между выражениями во время интерпретации.
+
+Client - (ExpressionParser): строит (или предоставляет) AST, собранный из TerminalExpression и NonTerminalExpression.
+    Клиент вызывает операцию interpret()
+
+![Interpreter](https://github.com/Jekahome/Patterns/blob/main/Interpreter.png "Interpreter")
+
+[Interpreter sourcemaking.com](https://sourcemaking.com/design_patterns/interpreter)
+
 - #### Command + Composite	
 
 Компоновка команд в блоки
@@ -373,10 +411,6 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 - #### Delegation	 
 
 Объект, вместо того чтобы выполнять одну из своих поставленных задач, поручает её связанному вспомогательному объекту.
-
-- #### Interpreter	
-
-С помощью классов создать свой язык для гибкости и простоты использования пользователем
 
 - #### Iterator	
 

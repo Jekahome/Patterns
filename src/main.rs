@@ -2,5 +2,5 @@
 #![allow(dead_code)]
 
 fn main() {
-    println!("{}",1);
+    println!("{}", 1);
 }

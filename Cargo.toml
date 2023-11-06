@@ -33,4 +33,8 @@ path ="src/idioms/2.Mem_replace/mem_replace.rs"
 name = "p_behavior_command"
 path ="src/patterns/behavior/command/src/main.rs"
 
+[[example]]
+name = "p_behavior_interpreter"
+path ="src/patterns/behavior/interpreter/src/main.rs"
+
 [dependencies]

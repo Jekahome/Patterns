@@ -1,209 +1,124 @@
 
-// интерфейсы поведения
-trait FlyBehaviorImpl{
-    fn fly(&self);
-}
-trait QuackBehaviorImpl{
-    fn quack(&self)->String;
-}
+/*
+Позволяет эффективно работать коду, благодаря наличию реализованных стратегий основываясь на входных данных.
+Все стратегии реализуются по обшему интерфейсу и соответственно код становится гибким/взаимозаменяемым.
+Это позволяет отказаться от использования переключателей и/или условных операторов.
+К примеру выбор способа сортировки зависит от типа и размера данных, соответственно выбирая подходящий алгоритм мы используем паттерн стратегия.
 
-// классы поведения fly
-struct  FlyWithWings;
-impl FlyBehaviorImpl for FlyWithWings {
-    fn fly(&self) { println!("Реализация полета");}
-}
+Если используется правило, которое не подвержено изменениям, нет необходимости обращаться к `Template Strategy`.
 
-struct  FlyNoWay;
-impl FlyBehaviorImpl for FlyNoWay{
-    fn fly(&self) { println!("Утка не может летать");}
-}
+Одно из преимуществ использования `Template Strategy` заключается в том, что мы можем избавиться от ветвления `if/else`.
+Достигается это за счет того, что `Client` "знает",
+какой алгоритм он хочет использовать и передает объект алгоритма в конструктор класса - `Context`. 
+Согласно `Singl responsibility` разделяем классы на подклассы.
 
-// классы поведения quack
-struct  Quack;
-impl QuackBehaviorImpl for Quack{
-    fn quack(&self)->String { String::from("Кряканье") }
-}
+Один из принципов SOLID: open/close - предполагает сущность открыта для расширения но закрыта для модификаций. Таким образом при надобности расширить
+поведение сущности мы просто добавляем еще одну стратегию, вместо изменения кода сущности.
 
-struct  Squeak;
-impl QuackBehaviorImpl for Squeak{
-    fn quack(&self)->String { String::from("Резиновые утки пищат") }
-}
-
-struct  MuteQuack;
-impl QuackBehaviorImpl for MuteQuack{
-    fn quack(&self)->String { String::from("Пустая реализация кряканья") }
-}
+Мотивы
+Программа должна обеспечивать различные варианты алгоритма или поведения
+Нужно изменять поведение каждого экземпляра класса
+Необходимо изменять поведение объектов на стадии выполнения
+Введение интерфейса позволяет классам-клиентам ничего не знать о классах, реализующих этот интерфейс и инкапсулирующих в себе конкретные алгоритмы
 
 
-// Интерфейс(трейт)
-trait Duck{
-    fn display(&self)-> String;
-    fn swim(&self)-> String{String::from("Все утки плавают")}
-    fn performQuack(&self)-> String;
-    fn performFly(&self);
-    fn setFlyBehavior(&mut self,fly: Box<dyn FlyBehaviorImpl>);
-    fn setQuackBehavior(&mut self,quack: Box<dyn QuackBehaviorImpl>);
+Эмпирические правила:
+
+- `Template Strategy` похожа на `Template Method`, за исключением степени детализации.
+
+- `Template State` похож на `Template Strategy`, за исключением своего намерения.
+
+- `Template State, Strategy, Bridge` (и в некоторой степени `Template Adapter`) имеют схожие структуры решений. 
+Все они разделяют элементы идиомы «handle/body». Они различаются по назначению – то есть решают разные задачи.
+
+- `Template Strategy` имеет две разные реализации, первая похожа на `Template State`. 
+Разница заключается во времени привязки (`Template Strategy` — это шаблон с однократной привязкой, тогда как `Template State` более динамичен).
+Объекты стратегии часто становятся хорошими легковесами.
+
+-`Template Strategy` позволяет вам изменить внутренности объекта. `Template Decorator` позволяет менять скин.
+И `Template Strategy`, и `Template Decorator` могут применяться для изменения поведения конкретных классов. 
+Достоинство стратегии в том, что интерфейс кастомизации не совпадает с публичным интерфейсом и может быть куда более удобным, а недостаток в том, что для использования стратегии необходимо изначально проектировать класс с возможностью регистрации стратегий.
+
+Состоит:
+
+ - Strategy - абстрактная сущность 
+
+ - ConcreteStrategy - конкретные реализации стратегии 
+
+ - Context - содержит конкретную стратегию
+
+ - Client - выбирает какую стратегию применять
+*/
+
+/*
+Задача
+Представьте, что мы работаем над проектом, который генерирует отчеты каждый месяц. 
+Нам нужно, чтобы отчеты формировались в разных форматах (стратегиях), например в формате JSON или Plain Text. 
+Но со временем ситуация меняется, и мы не знаем, какие требования мы можем получить в будущем. 
+Например, нам может потребоваться создать отчет в совершенно новом формате или просто изменить один из существующих форматов.
+*/
+use std::collections::HashMap;
+
+type Data = HashMap<String, u32>;
+
+// Strategy
+trait Formatter {
+    fn format(&self, data: &Data, buf: &mut String);
 }
 
-//Субклассы
-// субклассы наследуются от базового класса Duck
-struct MallardDuck {
-   name:String,
-   flyBehavior: Box<dyn FlyBehaviorImpl>,
-   quackBehavior: Box<dyn QuackBehaviorImpl>
-}
-impl Duck for MallardDuck {
-
-    fn swim(&self)-> String{
-        let mut buf = &mut self.name.clone();
-        buf.push_str(" плавает");
-        buf.clone()
-    }
-    fn display(&self)-> String{
-        let mut buf = &mut self.name.clone();
-        buf.push_str(" она Кряква - это дикая утка");
-        buf.clone()
-    }
-    fn performQuack(&self)-> String{
-        self.quackBehavior.quack().clone()
-    }
-    fn performFly(&self){
-        self.flyBehavior.fly();
-    }
-    fn setFlyBehavior(&mut self,fly: Box<dyn FlyBehaviorImpl>){
-        self.flyBehavior = fly;
-    }
-    fn setQuackBehavior(&mut self,quack: Box<dyn QuackBehaviorImpl>){
-        self.quackBehavior = quack;
-    }
-}
-impl MallardDuck {
-    fn constructor(name:String,
-                   flyBehavior: Box<dyn FlyBehaviorImpl>,
-                   quackBehavior: Box<dyn QuackBehaviorImpl>)->Self{
-
-        MallardDuck{name,flyBehavior,quackBehavior}
-    }
-    fn constructor2(name:String)->Self{
-        MallardDuck{name,flyBehavior:Box::new(FlyWithWings),quackBehavior:Box::new(Quack)}
+// ConcreteStrategy
+struct Report;
+impl Report {
+    // Следует использовать trait Write, но мы используем String, чтобы игнорировать обработку ошибок.
+    fn generate<T: Formatter>(g: T, s: &mut String) {
+        // backend operations...
+        let mut data = HashMap::new();
+        data.insert("one".to_string(), 1);
+        data.insert("two".to_string(), 2);
+        // generate report
+        g.format(&data, s);
     }
 }
 
-
-//резиновая
-struct RubberDuck {
-    name:String,
-    flyBehavior: Box<dyn FlyBehaviorImpl>,
-    quackBehavior: Box<dyn QuackBehaviorImpl>
-}
-impl Duck for RubberDuck {
-
-    fn swim(&self)-> String{
-        let mut buf = &mut self.name.clone();
-        buf.push_str(" плавает");
-        buf.clone()
-    }
-    fn display(&self)-> String{
-        let mut buf = &mut self.name.clone();
-        buf.push_str(" она резиновая утка");
-        buf.clone()
-    }
-    fn performQuack(&self)-> String{
-        self.quackBehavior.quack().clone()
-    }
-    fn performFly(&self){
-        self.flyBehavior.fly();
-    }
-    fn setFlyBehavior(&mut self,fly: Box<dyn FlyBehaviorImpl>){
-        self.flyBehavior = fly;
-    }
-    fn setQuackBehavior(&mut self,quack: Box<dyn QuackBehaviorImpl>){
-        self.quackBehavior = quack;
-    }
-}
-impl RubberDuck {
-    fn constructor(name:String)->Self{
-        RubberDuck{name,flyBehavior:Box::new(FlyWithWings),quackBehavior:Box::new(Quack)}
+// ConcreteStrategy
+struct Text;
+impl Formatter for Text {
+    fn format(&self, data: &Data, buf: &mut String) {
+        for (k, v) in data {
+            let entry = format!("{} {}\n", k, v);
+            buf.push_str(&entry);
+        }
     }
 }
 
-//приманка
-struct DecoyDuck {
-    name:String,
-    flyBehavior: Box<dyn FlyBehaviorImpl>,
-    quackBehavior: Box<dyn QuackBehaviorImpl>
-}
-impl Duck for DecoyDuck {
-
-    fn swim(&self)-> String{
-        let mut buf = &mut self.name.clone();
-        buf.push_str(" плавает");
-        buf.clone()
-    }
-    fn display(&self)-> String{
-        let mut buf = &mut self.name.clone();
-        buf.push_str(" она из дерева");
-        buf.clone()
-    }
-    fn performQuack(&self)-> String{
-        self.quackBehavior.quack().clone()
-    }
-    fn performFly(&self){
-        self.flyBehavior.fly();
-    }
-    fn setFlyBehavior(&mut self,fly: Box<dyn FlyBehaviorImpl>){
-        self.flyBehavior = fly;
-    }
-    fn setQuackBehavior(&mut self,quack: Box<dyn QuackBehaviorImpl>){
-        self.quackBehavior = quack;
-    }
-}
-impl DecoyDuck {
-    fn constructor(name:String)->Self{
-        DecoyDuck{name,flyBehavior:Box::new(FlyWithWings),quackBehavior:Box::new(Quack)}
+// ConcreteStrategy
+struct Json;
+impl Formatter for Json {
+    fn format(&self, data: &Data, buf: &mut String) {
+        buf.push('[');
+        for (k, v) in data.into_iter() {
+            let entry = format!(r#"{{"{}":"{}"}}"#, k, v);
+            buf.push_str(&entry);
+            buf.push(',');
+        }
+        if !data.is_empty() {
+            buf.pop(); // remove extra, at the end
+        }
+        buf.push(']');
     }
 }
 
-//Имитация утиного кряка т.е. требуется только поведение кряканья
-struct Manok {
-    name:String,
-    quackBehavior: Box<dyn QuackBehaviorImpl>
-}
-impl Manok {
-    fn constructor(name:String)->Self{
-        Manok{name,quackBehavior:Box::new(Quack)}
-    }
-    fn swim(&self)-> String{
-        let mut buf = &mut self.name.clone();
-        buf.push_str(" плавает");
-        buf.clone()
-    }
-    fn display(&self)-> String{
-        let mut buf = &mut self.name.clone();
-        buf.push_str(" она из дерева");
-        buf.clone()
-    }
-    fn performQuack(&self)-> String{
-        self.quackBehavior.quack().clone()
-    }
-    fn setQuackBehavior(&mut self,quack: Box<dyn QuackBehaviorImpl>){
-        self.quackBehavior = quack;
-    }
-}
+// cargo run --example p_behavior_strategy
+fn main() {
+    // Context/Client
 
+    let mut s = String::from("");
+    Report::generate(Text, &mut s);
+    assert!(s.contains("one 1"));
+    assert!(s.contains("two 2"));
 
-
-fn main(){
-
-    let mut m_duck = MallardDuck::constructor(String::from("Кряква"),
-                                          Box::new(FlyWithWings),
-                                          Box::new(Quack));
-    m_duck = MallardDuck::constructor2(String::from("Кряква"));
-    m_duck.performFly();
-    m_duck.setFlyBehavior(Box::new(FlyNoWay));
-    m_duck.performFly();
-
-    println!("{}",m_duck.performQuack());
-    m_duck.setQuackBehavior(Box::new(MuteQuack));
-    println!("{}",m_duck.performQuack());
+    s.clear(); // reuse the same buffer
+    Report::generate(Json, &mut s);
+    assert!(s.contains(r#"{"one":"1"}"#));
+    assert!(s.contains(r#"{"two":"2"}"#));
 }

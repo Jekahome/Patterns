@@ -41,4 +41,9 @@ path ="src/patterns/behavior/interpreter/src/main.rs"
 name = "p_behavior_strategy"
 path ="src/patterns/behavior/strategy/src/main.rs"
 
+[[example]]
+name = "p_behavior_visitor"
+path ="src/patterns/behavior/visitor/src/main.rs"
+
+
 [dependencies]

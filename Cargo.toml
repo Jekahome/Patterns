@@ -53,4 +53,10 @@ path ="src/patterns/creational/builder/src/main.rs"
 name = "p_creational_fold"
 path ="src/patterns/creational/fold/src/main.rs"
 
+[[example]]
+name = "p_structural_adapter"
+path ="src/patterns/structural/adapter/src/main.rs"
+
 [dependencies]
+futures = "0.3"
+tokio =  { version = "1.12", features = ["full"] }

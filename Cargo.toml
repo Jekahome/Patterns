@@ -59,7 +59,7 @@ path ="src/patterns/structural/adapter/src/main.rs"
 
 [[example]]
 name = "p_structural_bridge"
-path ="src/patterns/structural/bridge/src/_main.rs"
+path ="src/patterns/structural/bridge/src/main.rs"
 
 [dependencies]
 futures = "0.3"

@@ -348,9 +348,14 @@ Adapter это объект-переводчик, который трансфо�
 для унификации уже существующих интерфейсов, а `Template Brige` используется, когда есть подозрение, что реализация интерфейса со временем изменится.
 Т.е. своевременное использование `Template Brige` избавит нас от необходимости внедрять `Template Adapter`
 
+Bridge Before:
+
 ![BridgeBefore](https://github.com/Jekahome/Patterns/blob/main/BridgeBefore.png "BridgeBefore")
 
+Bridge After:
+
 ![BridgeAfter](https://github.com/Jekahome/Patterns/blob/main/BridgeAfter.png "BridgeAfter")
+
 
 [Bridge](http://dron.by/post/pattern-proektirovaniya-bridge-most-na-php.html)
 

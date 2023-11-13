@@ -45,6 +45,11 @@ path ="src/patterns/behavior/strategy/src/main.rs"
 name = "p_behavior_visitor"
 path ="src/patterns/behavior/visitor/src/main.rs"
 
+
+[[example]]
+name = "p_behavior_iterator"
+path ="src/patterns/behavior/iterator/src/main.rs"
+
 [[example]]
 name = "p_creational_builder"
 path ="src/patterns/creational/builder/src/main.rs"

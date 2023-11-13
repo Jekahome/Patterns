@@ -54,6 +54,10 @@ name = "p_behavior_observer"
 path ="src/patterns/behavior/observer/src/main.rs"
 
 [[example]]
+name = "p_behavior_state"
+path ="src/patterns/behavior/state/src/main.rs"
+
+[[example]]
 name = "p_creational_builder"
 path ="src/patterns/creational/builder/src/main.rs"
 

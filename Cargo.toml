@@ -61,6 +61,11 @@ path ="src/patterns/structural/adapter/src/main.rs"
 name = "p_structural_bridge"
 path ="src/patterns/structural/bridge/src/main.rs"
 
+[[example]]
+name = "p_structural_decorator"
+path ="src/patterns/structural/decorator/src/main.rs"
+
+
 [dependencies]
 futures = "0.3"
 tokio =  { version = "1.12", features = ["full"] }

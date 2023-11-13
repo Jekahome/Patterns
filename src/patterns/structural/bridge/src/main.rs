@@ -1,3 +1,6 @@
+#![allow(unused_imports)]
+#![allow(unused_variables)]
+#![allow(dead_code)]
 /*
 `Template Brige` - отделение интерфейса (группа поведений) от реализации (конкретное поведение из группы)
 
@@ -32,7 +35,7 @@
 - ...
 */
 #[derive(Clone, Copy)]
-struct User;
+pub struct User;
 impl User {
     fn verif_sensor(&self, sensor: &str) -> bool {
         true
@@ -40,7 +43,7 @@ impl User {
 }
 
 use btn::{Button1, Button2};
-mod btn {
+pub mod btn {
     use super::User;
     pub struct Button1 {
         // Кнопка на пружине с двумя состояниями
@@ -127,7 +130,7 @@ mod btn {
 // И чем это мешает? Много структур?
 // Да! при добавлении нового типа поведения придется реализовывать каждую комбинацию поведений
 use client::Client;
-mod client {
+pub mod client {
     use super::*;
     pub struct Client {
         btn: Button1,
@@ -243,17 +246,17 @@ mod btn2 {
         fn on(&mut self) {}
         fn off(&mut self) {}
     }
-    pub struct ButtonV2 {
-        status: Box<dyn ModeState>,
-        core: Box<dyn OperatingPrinciple>,
+    pub struct ButtonV2<M,C> {
+        status: M,
+        core: C,
     }
-    impl ButtonV2 {
-        pub fn new(status: Box<dyn ModeState>, core: Box<dyn OperatingPrinciple>) -> Self {
+    impl<M: ModeState, C: OperatingPrinciple> ButtonV2<M,C> {
+        pub fn new(status: M, core: C) -> Self {
             Self { status, core }
         }
     }
 
-    impl Button for ButtonV2 {
+    impl<M: ModeState, C: OperatingPrinciple> Button for ButtonV2<M,C> {
         fn turn_on(&mut self, user: Option<User>) -> bool {
             if self.core.check(user.as_ref()) {
                 self.core.on();
@@ -278,11 +281,11 @@ mod btn2 {
 use client2::Client2;
 mod client2 {
     use super::*;
-    pub struct Client2 {
-        btn: Box<dyn Button>,
+    pub struct Client2<B> {
+        btn: B,
     }
-    impl Client2 {
-        pub fn new(btn: Box<dyn Button>) -> Self {
+    impl<B:Button> Client2<B> {
+        pub fn new(btn: B) -> Self {
             Self { btn }
         }
         pub fn turn_on(&mut self) {
@@ -297,7 +300,7 @@ mod client2 {
         }
     }
 }
-
+// cargo run --example p_structural_bridge
 fn main() {
     let mut client = Client::new();
     client.turn_on();
@@ -305,10 +308,10 @@ fn main() {
 
     println!("-----------------------");
 
-    let mut client = Client2::new(Box::new(ButtonV2::new(
-        Box::new(StateOnZeroOff::new()),
-        Box::new(Sensor),
-    )));
+    let mut client = Client2::new(ButtonV2::new(
+        StateOnZeroOff::new(),
+        Sensor,
+    ));
     client.turn_on();
     client.turn_off();
 }

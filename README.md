@@ -50,7 +50,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 Если API между типами не меняется — меняется только поведение — тогда лучше использовать **Strategy Pattern** 
 (в Rust нет необходимости в шаблоне стратегии , потому что мы можем просто использовать трейты :thinking:).
 
-![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Rust%20idioms.png "Rust idioms")
+![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/_img/Rust%20idioms.png "Rust idioms")
 
 Рекомендации, которым следует следовать при кодировании. Это согласованные нормы общества. Нарушать их следует только в том случае, если у вас есть для этого веская причина.
 
@@ -86,7 +86,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 [шаблон Состояние](https://doc.rust-lang.ru/book/ch17-03-oo-design-patterns.html)
 
-![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Anti%20patterns.png "Anti patterns")
+![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/_img/Anti%20patterns.png "Anti patterns")
 
 Методы решения распространенных проблем при кодировании. Однако, хотя шаблоны проектирования дают нам преимущества, антишаблоны создают больше проблем.
 
@@ -108,7 +108,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 
 - [Управление программными проектами](https://sourcemaking.com/antipatterns/software-project-management-antipatterns)
 
-![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Design%20principles.png "Design principles")
+![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/_img/Design%20principles.png "Design principles")
 
 ### Design principles: SOLID
 
@@ -159,7 +159,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 [dry-kiss-yagni-principles](https://henriquesd.medium.com/dry-kiss-yagni-principles-1ce09d9c601f)
 
 
-![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/Design%20patterns.png "Design patterns")
+![This is an alt text.](https://github.com/Jekahome/Patterns/blob/main/_img/Design%20patterns.png "Design patterns")
 
 Методы решения распространенных проблем при кодировании.
 
@@ -325,7 +325,7 @@ Adapter это объект-переводчик, который трансфо�
 Таким образом, декоратор более прозрачен для приложения, чем адаптер. 
 Как следствие, `Template Decorator` поддерживает рекурсивную композицию, что невозможно при использовании чистых адаптеров.
 
-![Adapter](https://github.com/Jekahome/Patterns/blob/main/Adapter.png "Adapter")
+![Adapter](https://github.com/Jekahome/Patterns/blob/main/_img/Adapter.png "Adapter")
 
 [Adapter sourcemaking.com](https://sourcemaking.com/design_patterns/adapter)
 
@@ -350,11 +350,11 @@ Adapter это объект-переводчик, который трансфо�
 
 Bridge Before:
 
-![BridgeBefore](https://github.com/Jekahome/Patterns/blob/main/BridgeBefore.png "BridgeBefore")
+![BridgeBefore](https://github.com/Jekahome/Patterns/blob/main/_img/BridgeBefore.png "BridgeBefore")
 
 Bridge After:
 
-![BridgeAfter](https://github.com/Jekahome/Patterns/blob/main/BridgeAfter.png "BridgeAfter")
+![BridgeAfter](https://github.com/Jekahome/Patterns/blob/main/_img/BridgeAfter.png "BridgeAfter")
 
 
 [Bridge](http://dron.by/post/pattern-proektirovaniya-bridge-most-na-php.html)
@@ -381,7 +381,7 @@ Bridge After:
 Поскольку этот шаблон решает проблему динамического добавления функций во время выполнения, 
 он решает проблему сложного требования к созданию подклассов при расширении функциональности базового класса.
 
-Если есть тредования четкой последовательности накидывания поведения то стоит рассмотреть вариации `Template Builder` или `Template Strategy`
+Если есть требования четкой последовательности накидывания поведения то стоит рассмотреть вариации `Template Builder` или `Template Strategy`
 
 **Эмпирические правила**
 
@@ -416,7 +416,7 @@ Bridge After:
 Приложение оборачивает класс данных в шифрующую и сжимающую обёртки, которые при чтении выдают оригинальные данные, а при записи — зашифрованные и сжатые.
 
 
-![Decorator](https://github.com/Jekahome/Patterns/blob/main/Decorator.jpg "Decorator")
+![Decorator](https://github.com/Jekahome/Patterns/blob/main/_img/Decorator.jpg "Decorator")
 
 [Decorator chercher.tech](https://chercher.tech/rust/decorator-design-pattern-rust)
 
@@ -555,7 +555,7 @@ Context - содержит информацию, которая является
 Client - (ExpressionParser): строит (или предоставляет) AST, собранный из TerminalExpression и NonTerminalExpression.
     Клиент вызывает операцию interpret()
 
-![Interpreter](https://github.com/Jekahome/Patterns/blob/main/Interpreter.png "Interpreter")
+![Interpreter](https://github.com/Jekahome/Patterns/blob/main/_img/Interpreter.png "Interpreter")
 
 [Interpreter sourcemaking.com](https://sourcemaking.com/design_patterns/interpreter)
 

@@ -3,7 +3,7 @@
 trait Drink{
     // Общий алгоритм приготовления, а отличные детали переопределенны
     //Шаблонный метод определяет скелет алгоритма.
-    fn template_method(&mut self){
+    fn Pattern_method(&mut self){
         self.step_cook_1();
         self.step_cook_2();
         self.step_cook_3();
@@ -44,7 +44,7 @@ impl Drink for Tea{
 }
 
 fn cook<T:Drink>(obj:Box<&mut T>){
-    obj.template_method();
+    obj.Pattern_method();
     println!("");
 }
 

@@ -246,17 +246,17 @@ mod btn2 {
         fn on(&mut self) {}
         fn off(&mut self) {}
     }
-    pub struct ButtonV2<M,C> {
+    pub struct ButtonV2<M, C> {
         status: M,
         core: C,
     }
-    impl<M: ModeState, C: OperatingPrinciple> ButtonV2<M,C> {
+    impl<M: ModeState, C: OperatingPrinciple> ButtonV2<M, C> {
         pub fn new(status: M, core: C) -> Self {
             Self { status, core }
         }
     }
 
-    impl<M: ModeState, C: OperatingPrinciple> Button for ButtonV2<M,C> {
+    impl<M: ModeState, C: OperatingPrinciple> Button for ButtonV2<M, C> {
         fn turn_on(&mut self, user: Option<User>) -> bool {
             if self.core.check(user.as_ref()) {
                 self.core.on();
@@ -284,7 +284,7 @@ mod client2 {
     pub struct Client2<B> {
         btn: B,
     }
-    impl<B:Button> Client2<B> {
+    impl<B: Button> Client2<B> {
         pub fn new(btn: B) -> Self {
             Self { btn }
         }
@@ -308,10 +308,7 @@ fn main() {
 
     println!("-----------------------");
 
-    let mut client = Client2::new(ButtonV2::new(
-        StateOnZeroOff::new(),
-        Sensor,
-    ));
+    let mut client = Client2::new(ButtonV2::new(StateOnZeroOff::new(), Sensor));
     client.turn_on();
     client.turn_off();
 }

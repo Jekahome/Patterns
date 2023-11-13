@@ -65,6 +65,9 @@ path ="src/patterns/structural/bridge/src/main.rs"
 name = "p_structural_decorator"
 path ="src/patterns/structural/decorator/src/main.rs"
 
+[[example]]
+name = "p_structural_facade"
+path ="src/patterns/structural/facade/src/main.rs"
 
 [dependencies]
 futures = "0.3"

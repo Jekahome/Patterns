@@ -1,8 +1,10 @@
-// https://github.com/crlf0710/singleton-rs/blob/master/src/singleton.rs
+/*
+https://github.com/crlf0710/singleton-rs/blob/master/src/singleton.rs
 
-//https://rust-embedded.github.io/book/peripherals/singletons.html
+https://rust-embedded.github.io/book/peripherals/singletons.html
 
-//https://stackoverflow.com/questions/27791532/how-do-i-create-a-global-mutable-singleton
+https://stackoverflow.com/questions/27791532/how-do-i-create-a-global-mutable-singleton
+*/
 
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
 use std::time::Duration;

@@ -1,8 +1,8 @@
 [package]
-name = "fabrica"
+name = "prototype"
 version = "0.1.0-dev"
 edition = "2018"
-description = "Pattern FABRIC"
+description = "Pattern Prototype"
 authors = ["Jeka <developer@gmail.com>"]
 readme = "README.md"
 

@@ -1,12 +1,9 @@
 [package]
-name = "singleton"
+name = "fabric_method"
 version = "0.1.0-dev"
 edition = "2018"
-description = "Pattern SINGLETON"
+description = "Pattern Fabric method"
 authors = ["Jeka <developer@gmail.com>"]
 readme = "README.md"
 
 [dependencies]
-once_cell = "1.3"
-lazy_static = "1.4"
-

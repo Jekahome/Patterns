@@ -70,6 +70,14 @@ name = "p_creational_fold"
 path ="src/patterns/creational/fold/src/main.rs"
 
 [[example]]
+name = "p_creational_fabric_method"
+path ="src/patterns/creational/fabric_method/src/main.rs"
+
+[[example]]
+name = "p_creational_prototype"
+path ="src/patterns/creational/prototype/src/main.rs"
+
+[[example]]
 name = "p_structural_adapter"
 path ="src/patterns/structural/adapter/src/main.rs"
 
@@ -85,8 +93,18 @@ path ="src/patterns/structural/decorator/src/main.rs"
 name = "p_structural_facade"
 path ="src/patterns/structural/facade/src/main.rs"
 
+[[example]]
+name = "p_structural_composite"
+path ="src/patterns/structural/composite/src/main.rs"
+
+[[example]]
+name = "p_structural_proxy"
+path ="src/patterns/structural/proxy/src/main.rs"
+
 [dependencies]
 futures = "0.3"
 tokio =  { version = "1.12", features = ["full"] }
 uuid = "*"
 rand = "*"
+once_cell = "1.3"
+lazy_static = "1.4"

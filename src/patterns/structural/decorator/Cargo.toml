@@ -7,4 +7,3 @@ authors = ["Jeka <developer@gmail.com>"]
 readme = "README.md"
 
 [dependencies]
-libmath = "0.2"

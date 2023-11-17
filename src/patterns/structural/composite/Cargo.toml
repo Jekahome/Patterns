@@ -1,12 +1,10 @@
 [package]
-name = "singleton"
+name = "composite"
 version = "0.1.0-dev"
 edition = "2018"
-description = "Pattern SINGLETON"
+description = "Pattern Composite"
 authors = ["Jeka <developer@gmail.com>"]
 readme = "README.md"
 
 [dependencies]
-once_cell = "1.3"
-lazy_static = "1.4"
-
+libmath = "0.2"

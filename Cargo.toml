@@ -62,6 +62,11 @@ name = "p_behavior_template_method"
 path ="src/patterns/behavior/template_method/src/main.rs"
 
 [[example]]
+name = "p_behavior_chain_of_responsibility"
+path ="src/patterns/behavior/chain_of_responsibility/src/main.rs"
+
+
+[[example]]
 name = "p_creational_builder"
 path ="src/patterns/creational/builder/src/main.rs"
 

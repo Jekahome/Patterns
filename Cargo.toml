@@ -113,6 +113,11 @@ path ="src/design_patterns/structural/composite/src/main.rs"
 name = "p_structural_proxy"
 path ="src/design_patterns/structural/proxy/src/main.rs"
 
+[[example]]
+name = "p_structural_flyweight"
+path ="src/design_patterns/structural/flyweight/src/main.rs"
+
+
 [dependencies]
 futures = "0.3"
 tokio =  { version = "1.12", features = ["full"] }

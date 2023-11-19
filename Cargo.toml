@@ -31,80 +31,87 @@ path ="src/idioms/2.Mem_replace/mem_replace.rs"
 
 [[example]]
 name = "p_behavior_command"
-path ="src/patterns/behavior/command/src/main.rs"
+path ="src/design_patterns/behavior/command/src/main.rs"
 
 [[example]]
 name = "p_behavior_interpreter"
-path ="src/patterns/behavior/interpreter/src/main.rs"
+path ="src/design_patterns/behavior/interpreter/src/main.rs"
 
 [[example]]
 name = "p_behavior_strategy"
-path ="src/patterns/behavior/strategy/src/main.rs"
+path ="src/design_patterns/behavior/strategy/src/main.rs"
 
 [[example]]
 name = "p_behavior_visitor"
-path ="src/patterns/behavior/visitor/src/main.rs"
+path ="src/design_patterns/behavior/visitor/src/main.rs"
 
 [[example]]
 name = "p_behavior_iterator"
-path ="src/patterns/behavior/iterator/src/main.rs"
+path ="src/design_patterns/behavior/iterator/src/main.rs"
 
 [[example]]
 name = "p_behavior_observer"
-path ="src/patterns/behavior/observer/src/main.rs"
+path ="src/design_patterns/behavior/observer/src/main.rs"
 
 [[example]]
 name = "p_behavior_state"
-path ="src/patterns/behavior/state/src/main.rs"
+path ="src/design_patterns/behavior/state/src/main.rs"
 
 [[example]]
 name = "p_behavior_template_method"
-path ="src/patterns/behavior/template_method/src/main.rs"
+path ="src/design_patterns/behavior/template_method/src/main.rs"
 
 [[example]]
 name = "p_behavior_chain_of_responsibility"
-path ="src/patterns/behavior/chain_of_responsibility/src/main.rs"
+path ="src/design_patterns/behavior/chain_of_responsibility/src/main.rs"
 
+[[example]]
+name = "p_behavior_memento"
+path ="src/design_patterns/behavior/memento/src/main.rs"
+
+[[example]]
+name = "p_behavior_mediator"
+path ="src/design_patterns/behavior/mediator/src/main.rs"
 
 [[example]]
 name = "p_creational_builder"
-path ="src/patterns/creational/builder/src/main.rs"
+path ="src/design_patterns/creational/builder/src/main.rs"
 
 [[example]]
 name = "p_creational_fold"
-path ="src/patterns/creational/fold/src/main.rs"
+path ="src/design_patterns/creational/fold/src/main.rs"
 
 [[example]]
 name = "p_creational_fabric_method"
-path ="src/patterns/creational/fabric_method/src/main.rs"
+path ="src/design_patterns/creational/fabric_method/src/main.rs"
 
 [[example]]
 name = "p_creational_prototype"
-path ="src/patterns/creational/prototype/src/main.rs"
+path ="src/design_patterns/creational/prototype/src/main.rs"
 
 [[example]]
 name = "p_structural_adapter"
-path ="src/patterns/structural/adapter/src/main.rs"
+path ="src/design_patterns/structural/adapter/src/main.rs"
 
 [[example]]
 name = "p_structural_bridge"
-path ="src/patterns/structural/bridge/src/main.rs"
+path ="src/design_patterns/structural/bridge/src/main.rs"
 
 [[example]]
 name = "p_structural_decorator"
-path ="src/patterns/structural/decorator/src/main.rs"
+path ="src/design_patterns/structural/decorator/src/main.rs"
 
 [[example]]
 name = "p_structural_facade"
-path ="src/patterns/structural/facade/src/main.rs"
+path ="src/design_patterns/structural/facade/src/main.rs"
 
 [[example]]
 name = "p_structural_composite"
-path ="src/patterns/structural/composite/src/main.rs"
+path ="src/design_patterns/structural/composite/src/main.rs"
 
 [[example]]
 name = "p_structural_proxy"
-path ="src/patterns/structural/proxy/src/main.rs"
+path ="src/design_patterns/structural/proxy/src/main.rs"
 
 [dependencies]
 futures = "0.3"

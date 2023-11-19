@@ -54,7 +54,7 @@
 2.Компонент не сохраняет ссылку на посредник. Вместо этого он получает ссылку через вызов метода.
 3.Поток управления начинается с main(), где посредник получает внешние события/команды.
 4.Свойство медиатора для взаимодействия между компонентами — это не то же самое, что его внешний API для получения внешних событий (команд из основного цикла).
-Mediatorчерта взаимодействия между компонентами ( notify_about_arrival, notify_about_departure) не совпадает с его внешним API для получения внешних событий ( accept​​, departкоманд из основного цикла).
+Trait Mediator взаимодействия между компонентами ( notify_about_arrival, notify_about_departure) не совпадает с его внешним API для получения внешних событий ( accept​​, depart команд из основного цикла).
 
 https://github.com/fadeevab/mediator-pattern-rust/blob/main/README.md
 */
@@ -65,6 +65,7 @@ pub trait Train {
     fn depart(&mut self, mediator: &mut dyn Mediator);
 }
 
+// Nodes
 use freight_train::FreightTrain;
 pub mod freight_train {
     use super::Mediator;
@@ -84,23 +85,20 @@ pub mod freight_train {
         fn name(&self) -> &String {
             &self.name
         }
-
         fn arrive(&mut self, mediator: &mut dyn Mediator) {
             if !mediator.notify_about_arrival(&self.name) {
                 println!("Freight train {}: Arrival blocked, waiting", self.name);
                 return;
             }
-
             println!("Freight train {}: Arrived", self.name);
         }
-
         fn depart(&mut self, mediator: &mut dyn Mediator) {
             println!("Freight train {}: Leaving", self.name);
             mediator.notify_about_departure(&self.name);
         }
     }
 }
-
+// Nodes
 use passenger_train::PassengerTrain;
 pub mod passenger_train {
     use super::*;
@@ -136,6 +134,7 @@ pub mod passenger_train {
     }
 }
 
+// Mediator
 use train_station::{Mediator, TrainStation};
 pub mod train_station {
     use std::collections::{HashMap, VecDeque};
@@ -205,14 +204,14 @@ pub mod train_station {
 
 // cargo run --example p_behavior_mediator
 fn main() {
-    let train1 = PassengerTrain::new("Train 1");
-    let train2 = FreightTrain::new("Train 2");
+    let train1 = PassengerTrain::new("Train 1"); // Пассажирский поезд
+    let train2 = FreightTrain::new("Train 2"); // Грузовой поезд
 
     // Station has `accept` and `depart` methods,
     // but it also implements `Mediator`.
     let mut station = TrainStation::default();
 
-    // Station is taking ownership of trains.
+    // Станция берет на себя управление поездами.
     station.accept(train1);
     station.accept(train2);
 

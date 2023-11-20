@@ -1,127 +1,30 @@
-[package]
-name = "Patterns"
-version = "0.1.0"
-edition = "2021"
+[workspace]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+members = [
+  "design_patterns_GoF/behavioral/chain-of-responsibility",
+  "design_patterns_GoF/behavioral/command",
+  "design_patterns_GoF/behavioral/interpreter",
+  "design_patterns_GoF/behavioral/iterator",
+  "design_patterns_GoF/behavioral/mediator",
+  "design_patterns_GoF/behavioral/memento",
+  "design_patterns_GoF/behavioral/observer",
+  "design_patterns_GoF/behavioral/state",
+  "design_patterns_GoF/behavioral/strategy",
+  "design_patterns_GoF/behavioral/template_method",
+  "design_patterns_GoF/behavioral/visitor",
 
-[[example]]
-name = "type_safety_typestate_1"
-path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.1.typestates.rs"
+  "design_patterns_GoF/creational/builder",
+  "design_patterns_GoF/creational/fabric_method",
+  "design_patterns_GoF/creational/fold",
+  "design_patterns_GoF/creational/prototype",
+  "design_patterns_GoF/creational/singleton",
 
-[[example]]
-name = "type_safety_typestate_2"
-path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.2.typestates.rs"
+  "design_patterns_GoF/structural/adapter",
+  "design_patterns_GoF/structural/bridge",
+  "design_patterns_GoF/structural/composite",
+  "design_patterns_GoF/structural/decorator",
+  "design_patterns_GoF/structural/facade",
+  "design_patterns_GoF/structural/flyweight",
+  "design_patterns_GoF/structural/proxy",
 
-[[example]]
-name = "type_safety_typestate_3"
-path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.3.typestates.rs"
-
-[[example]]
-name = "type_safety_typestate_4"
-path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.4.typestates.rs"
-
-[[example]]
-name = "type_safety_typestate_5"
-path ="src/idioms/1.Type_safety/1.2.Typestates/1.2.5.typestates.rs"
-
-[[example]]
-name = "mem_replace"
-path ="src/idioms/2.Mem_replace/mem_replace.rs"
-
-[[example]]
-name = "p_behavior_command"
-path ="src/design_patterns/behavior/command/src/main.rs"
-
-[[example]]
-name = "p_behavior_interpreter"
-path ="src/design_patterns/behavior/interpreter/src/main.rs"
-
-[[example]]
-name = "p_behavior_strategy"
-path ="src/design_patterns/behavior/strategy/src/main.rs"
-
-[[example]]
-name = "p_behavior_visitor"
-path ="src/design_patterns/behavior/visitor/src/main.rs"
-
-[[example]]
-name = "p_behavior_iterator"
-path ="src/design_patterns/behavior/iterator/src/main.rs"
-
-[[example]]
-name = "p_behavior_observer"
-path ="src/design_patterns/behavior/observer/src/main.rs"
-
-[[example]]
-name = "p_behavior_state"
-path ="src/design_patterns/behavior/state/src/main.rs"
-
-[[example]]
-name = "p_behavior_template_method"
-path ="src/design_patterns/behavior/template_method/src/main.rs"
-
-[[example]]
-name = "p_behavior_chain_of_responsibility"
-path ="src/design_patterns/behavior/chain_of_responsibility/src/main.rs"
-
-[[example]]
-name = "p_behavior_memento"
-path ="src/design_patterns/behavior/memento/src/main.rs"
-
-[[example]]
-name = "p_behavior_mediator"
-path ="src/design_patterns/behavior/mediator/src/main.rs"
-
-[[example]]
-name = "p_creational_builder"
-path ="src/design_patterns/creational/builder/src/main.rs"
-
-[[example]]
-name = "p_creational_fold"
-path ="src/design_patterns/creational/fold/src/main.rs"
-
-[[example]]
-name = "p_creational_fabric_method"
-path ="src/design_patterns/creational/fabric_method/src/main.rs"
-
-[[example]]
-name = "p_creational_prototype"
-path ="src/design_patterns/creational/prototype/src/main.rs"
-
-[[example]]
-name = "p_structural_adapter"
-path ="src/design_patterns/structural/adapter/src/main.rs"
-
-[[example]]
-name = "p_structural_bridge"
-path ="src/design_patterns/structural/bridge/src/main.rs"
-
-[[example]]
-name = "p_structural_decorator"
-path ="src/design_patterns/structural/decorator/src/main.rs"
-
-[[example]]
-name = "p_structural_facade"
-path ="src/design_patterns/structural/facade/src/main.rs"
-
-[[example]]
-name = "p_structural_composite"
-path ="src/design_patterns/structural/composite/src/main.rs"
-
-[[example]]
-name = "p_structural_proxy"
-path ="src/design_patterns/structural/proxy/src/main.rs"
-
-[[example]]
-name = "p_structural_flyweight"
-path ="src/design_patterns/structural/flyweight/src/main.rs"
-
-
-[dependencies]
-futures = "0.3"
-tokio =  { version = "1.12", features = ["full"] }
-uuid = "*"
-rand = "*"
-once_cell = "1.3"
-lazy_static = "1.4"
+]

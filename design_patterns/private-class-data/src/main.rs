@@ -13,55 +13,57 @@
 
 Шаблон проектирования данных частного класса направлен на уменьшение раскрытия атрибутов за счет ограничения их видимости.
 
-Это уменьшает количество атрибутов класса, инкапсулируя их в один объект данных. 
+Это уменьшает количество атрибутов класса, инкапсулируя их в один объект данных.
 Это позволяет разработчику класса лишить права записи атрибутов, которые предназначены для установки только во время создания, даже из методов целевого класса.
 
 P.S.
 В Rust'е есть возможность "запечатать" [Sealing](https://github.com/Jekahome/Patterns/tree/main/idioms/6.Sealing) реализацию.
 */
 
-use private_samples::{Circle};
+use private_samples::Circle;
 
-mod private_samples{
-   
+mod private_samples {
+
     use private_class_data::CircleSpecs;
-    mod private_class_data{
-        pub(in crate::private_samples) struct CircleSpecs{
+    mod private_class_data {
+        pub(in crate::private_samples) struct CircleSpecs {
             radius: f64,
-            point: String
+            point: String,
         }
-        impl CircleSpecs{
-            pub fn new(radius: f64, point: String) -> Self{
-                Self{radius, point}
+        impl CircleSpecs {
+            pub fn new(radius: f64, point: String) -> Self {
+                Self { radius, point }
             }
-            pub fn radius(&self) -> f64{
+            pub fn radius(&self) -> f64 {
                 self.radius
             }
-            pub fn point(&self) -> &str{
+            pub fn point(&self) -> &str {
                 self.point.as_str()
             }
-        }        
+        }
     }
     // TODO: Circle не сможет получить доступ к приватным полям CircleSpecs и изменить его состояние после создания
     pub struct Circle {
-        circle_specs: CircleSpecs
+        circle_specs: CircleSpecs,
     }
-    impl Circle{
-        pub fn new(radius: f64, point: String) -> Self{
-            Self{circle_specs: CircleSpecs::new(radius, point)}
+    impl Circle {
+        pub fn new(radius: f64, point: String) -> Self {
+            Self {
+                circle_specs: CircleSpecs::new(radius, point),
+            }
         }
-        pub fn circumference(&self) -> f64{
+        pub fn circumference(&self) -> f64 {
             self.circle_specs.radius() * std::f64::consts::PI
         }
-        pub fn diameter(&self) -> f64{
+        pub fn diameter(&self) -> f64 {
             self.circle_specs.radius() * 2.0
         }
     }
 }
 
 // cargo run --bin private-class-data
-fn main(){
+fn main() {
     let c = Circle::new(4.0, "center".into());
-    println!("circumference: {:.2}", c.circumference()); 
+    println!("circumference: {:.2}", c.circumference());
     println!("diameter: {}", c.diameter());
 }

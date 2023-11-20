@@ -37,8 +37,9 @@ pub mod gui {
     }
 
     pub trait DialogFactory {
+        type B: Button;
         /// The factory method. It must be overridden with a concrete implementation.
-        fn create_button_factory_method(&self) -> Box<dyn Button>;
+        fn create_button_factory_method(&self) -> Self::B;
 
         fn render(&self) {
             let button = self.create_button_factory_method();
@@ -69,8 +70,9 @@ pub mod html_gui {
     pub struct HtmlConcreteFactory;
 
     impl DialogFactory for HtmlConcreteFactory {
-        fn create_button_factory_method(&self) -> Box<dyn Button> {
-            Box::new(HtmlButton)
+        type B = HtmlButton;
+        fn create_button_factory_method(&self) -> Self::B {
+            HtmlButton
         }
     }
 }
@@ -94,8 +96,9 @@ pub mod windows_gui {
     pub struct WindowsConcreteFactory;
 
     impl DialogFactory for WindowsConcreteFactory {
-        fn create_button_factory_method(&self) -> Box<dyn Button> {
-            Box::new(WindowsButton)
+        type B = WindowsButton;
+        fn create_button_factory_method(&self) -> Self::B {
+            WindowsButton
         }
     }
 }
@@ -119,21 +122,45 @@ pub mod linux_gui {
     pub struct LinuxConcreteFactory;
 
     impl DialogFactory for LinuxConcreteFactory {
-        fn create_button_factory_method(&self) -> Box<dyn Button> {
-            Box::new(LinuxButton)
+        type B = LinuxButton;
+        fn create_button_factory_method(&self) -> Self::B {
+            LinuxButton
         }
     }
 }
 
-struct Client {
-    btn: Box<dyn Button>,
+struct Client<B> {
+    btn: B,
 }
-impl Client {
-    fn new(btn: Box<dyn Button>) -> Self {
+impl<B: Button> Client<B> {
+    fn new(btn: B) -> Self {
         Self { btn }
     }
     fn use_btn(&self) {
         self.btn.render();
+    }
+}
+
+enum Variants {
+    Windows(Box<dyn DialogFactory<B = WindowsButton>>),
+    Linux(Box<dyn DialogFactory<B = LinuxButton>>),
+    Html(Box<dyn DialogFactory<B = HtmlButton>>),
+}
+
+fn use_client(dialog: Variants) {
+    match dialog {
+        Variants::Windows(dialog) => {
+            let client = Client::new(dialog.create_button_factory_method());
+            client.use_btn();
+        }
+        Variants::Linux(dialog) => {
+            let client = Client::new(dialog.create_button_factory_method());
+            client.use_btn();
+        }
+        Variants::Html(dialog) => {
+            let client = Client::new(dialog.create_button_factory_method());
+            client.use_btn();
+        }
     }
 }
 // cargo run --bin fabric_method
@@ -141,30 +168,21 @@ fn main() {
     let mut line = String::new();
     println!("Enter type OS: (Windows, Linux, HTML (default: HTML): ");
     let _ = std::io::stdin().read_line(&mut line).unwrap();
-    let dialog: Box<dyn DialogFactory> = match line.trim().to_lowercase().as_str() {
-        "windows" => Box::new(WindowsConcreteFactory),
-        "linux" => Box::new(LinuxConcreteFactory),
-        "html" => Box::new(HtmlConcreteFactory),
-        _ => Box::new(HtmlConcreteFactory),
+    let dialog: Variants = match line.trim().to_lowercase().as_str() {
+        "windows" => Variants::Windows(Box::new(WindowsConcreteFactory)),
+        "linux" => Variants::Linux(Box::new(LinuxConcreteFactory)),
+        "html" => Variants::Html(Box::new(HtmlConcreteFactory)),
+        _ => Variants::Html(Box::new(HtmlConcreteFactory)),
     };
-
-    let client = Client::new(dialog.create_button_factory_method());
-    client.use_btn();
+    use_client(dialog);
 
     /*
-    let dialog:&dyn DialogFactory = if cfg!(windows) {
-        println!("-- Windows detected, creating Windows GUI --");
-        &WindowsConcreteFactory
-    }else if cfg!(target_os = "linux") {
-        println!("-- linux detected, creating linux GUI --");
-        &LinuxConcreteFactory
-    } else {
-        println!("-- No OS detected, creating the HTML GUI --");
-        &HtmlConcreteFactory
-    };
-
-    // Client:
-    dialog.render();
-    dialog.refresh();
+        if cfg!(windows) {
+             ...
+        }else if cfg!(target_os = "linux") {
+             ...
+        } else {
+             ...
+        }
     */
 }

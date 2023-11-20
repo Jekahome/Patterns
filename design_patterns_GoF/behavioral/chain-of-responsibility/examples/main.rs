@@ -1,7 +1,7 @@
 // Chain of Responsibility (= CoR) pattern
 
 trait CoR {
-    fn process_request(&self, &mut Request);
+    fn process_request(&self, req: &mut Request);
 }
 
 trait Request {
@@ -16,10 +16,7 @@ struct ConcreteRequest {
 
 impl ConcreteRequest {
     fn new(level: Level, v: usize) -> Self {
-        Self {
-            level,
-            v,
-        }
+        Self { level, v }
     }
 }
 

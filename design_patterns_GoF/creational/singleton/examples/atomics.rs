@@ -6,7 +6,6 @@ fn do_a_call() {
     CALL_COUNT.fetch_add(1, Ordering::SeqCst);
 }
 
-
 // cargo run --bin singleton -- --example atomics
 fn main() {
     do_a_call();

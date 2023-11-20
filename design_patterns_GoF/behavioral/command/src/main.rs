@@ -92,10 +92,7 @@ pub mod business_layer {
             }
             pub fn read(&self) -> std::io::Result<()> {
                 println!("Read");
-                let display = format!(
-                    "{}",
-                    self.file.as_ref().display()
-                );
+                let display = format!("{}", self.file.as_ref().display());
                 let path = Path::new(&display);
                 let mut f = OpenOptions::new().read(true).open(path)?;
                 let mut contents = String::new();
@@ -131,10 +128,7 @@ pub mod business_layer {
             }
             pub fn add_str(&self) -> std::io::Result<()> {
                 println!("Add");
-                let display = format!(
-                    "{}",
-                    self.file.as_ref().display()
-                );
+                let display = format!("{}", self.file.as_ref().display());
                 let path = Path::new(&display);
                 let mut f = OpenOptions::new().append(true).create(true).open(path)?;
                 f.write_fmt(format_args!("{}\n", self.msg.as_ref()))?;
@@ -190,7 +184,7 @@ fn env_user_layer(history: &mut business_layer::MacroCommand) -> bool {
                     history.push(cmd);
                     return true;
                 }
-            },
+            }
             "add" => {
                 if let Ok(msg) = env::var("ENV_VAR_VALUE") {
                     if let Ok(file) = env::var("ENV_VAR_FILE") {
@@ -199,7 +193,7 @@ fn env_user_layer(history: &mut business_layer::MacroCommand) -> bool {
                         return true;
                     }
                 }
-            },
+            }
             _ => {
                 return false;
             }

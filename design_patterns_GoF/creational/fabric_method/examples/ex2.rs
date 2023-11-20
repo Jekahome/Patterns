@@ -9,9 +9,7 @@ struct IDCard {
 impl IDCard {
     fn new(owner: String) -> IDCard {
         println!("{}のカードを作ります。", owner);
-        IDCard {
-            owner: owner,
-        }
+        IDCard { owner: owner }
     }
 
     fn get_owner(&self) -> String {
@@ -43,9 +41,7 @@ struct IDCardFactory {
 
 impl IDCardFactory {
     fn new() -> IDCardFactory {
-        IDCardFactory {
-            owners: Vec::new(),
-        }
+        IDCardFactory { owners: Vec::new() }
     }
 }
 

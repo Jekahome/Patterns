@@ -1,4 +1,3 @@
-
 // Абстракция обьектом которой будут манипулировать разные реализации печати
 trait DisplayImpl {
     fn raw_open(&self);
@@ -13,9 +12,7 @@ struct Display {
 }
 impl Display {
     fn new(imple: Box<DisplayImpl>) -> Display {
-        Display {
-            imple: imple,
-        }
+        Display { imple: imple }
     }
     fn open(&self) {
         self.imple.raw_open();
@@ -39,9 +36,7 @@ struct CountDisplay {
 }
 impl CountDisplay {
     fn new(display: Box<DisplayImpl>) -> CountDisplay {
-        CountDisplay {
-            display: display,
-        }
+        CountDisplay { display: display }
     }
     fn multi_display(&self, times: u32) {
         self.display.raw_open();
@@ -94,8 +89,12 @@ impl DisplayImpl for StringDisplayImpl {
 // cargo run --bin bridge -- --example main
 fn main() {
     let d1 = Display::new(Box::new(StringDisplayImpl::new("Hello, Japan".to_string())));
-    let d2 = CountDisplay::new(Box::new(StringDisplayImpl::new("Hello, World.".to_string())));
-    let d3 = CountDisplay::new(Box::new(StringDisplayImpl::new("Hello, Universe.".to_string())));
+    let d2 = CountDisplay::new(Box::new(StringDisplayImpl::new(
+        "Hello, World.".to_string(),
+    )));
+    let d3 = CountDisplay::new(Box::new(StringDisplayImpl::new(
+        "Hello, Universe.".to_string(),
+    )));
     d1.display();
     d2.display();
     d3.display();

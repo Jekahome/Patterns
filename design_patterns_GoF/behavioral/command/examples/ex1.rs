@@ -1,5 +1,3 @@
- 
-
 trait Command {
     fn execute(&self);
 }
@@ -9,9 +7,7 @@ struct MacroCommand {
 }
 impl MacroCommand {
     fn new() -> MacroCommand {
-        MacroCommand {
-            stack: Vec::new(),
-        }
+        MacroCommand { stack: Vec::new() }
     }
     fn push(&mut self, cmd: Box<Command>) {
         self.stack.push(cmd);
@@ -30,7 +26,6 @@ impl Command for MacroCommand {
         }
     }
 }
-
 
 struct DrawCommand {
     drawable: Box<Drawable>,

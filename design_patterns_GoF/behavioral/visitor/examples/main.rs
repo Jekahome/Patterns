@@ -1,4 +1,3 @@
-
 // Данные, которые мы не хотим изменять и поэтому будем их посещать
 mod ast {
     pub enum Stmt {
@@ -30,17 +29,19 @@ mod visit {
     }
 }
 
-use visit::*;
 use ast::*;
+use visit::*;
 
 // Пример конкретной реализации — обход AST, интерпретирующий его как код.
 pub struct Interpreter;
 impl Visitor<i64> for Interpreter {
-    fn visit_name(&mut self, n: &Name) -> i64 { panic!() }// нет смысла String приводить к i64
+    fn visit_name(&mut self, n: &Name) -> i64 {
+        panic!()
+    } // нет смысла String приводить к i64
     fn visit_stmt(&mut self, s: &Stmt) -> i64 {
         match *s {
             Stmt::Expr(ref e) => self.visit_expr(e),
-            Stmt::Let(..) => unimplemented!(),// нет смысла String приводить к i64
+            Stmt::Let(..) => unimplemented!(), // нет смысла String приводить к i64
         }
     }
 
@@ -55,7 +56,7 @@ impl Visitor<i64> for Interpreter {
 
 pub fn walk_expr(visitor: &mut Interpreter, e: &Expr) {
     match *e {
-        Expr::IntLit(_) => {},
+        Expr::IntLit(_) => {}
         Expr::Add(ref lhs, ref rhs) => {
             visitor.visit_expr(lhs);
             visitor.visit_expr(rhs);
@@ -68,13 +69,13 @@ pub fn walk_expr(visitor: &mut Interpreter, e: &Expr) {
 }
 
 // cargo run --bin visitor -- --example main.rs
-fn main(){
-    let exp = Expr::Add(Box::new(Expr::IntLit(8)),Box::new(Expr::IntLit(3)));
+fn main() {
+    let exp = Expr::Add(Box::new(Expr::IntLit(8)), Box::new(Expr::IntLit(3)));
     let mut interpreter = Interpreter;
     let res = interpreter.visit_expr(&exp);
-    println!("{}",res);
+    println!("{}", res);
 
     let mut interpreter = Interpreter;
-    let exp = Expr::Add(Box::new(Expr::IntLit(8)),Box::new(Expr::IntLit(3)));
-    walk_expr(&mut interpreter,&exp);
+    let exp = Expr::Add(Box::new(Expr::IntLit(8)), Box::new(Expr::IntLit(3)));
+    walk_expr(&mut interpreter, &exp);
 }

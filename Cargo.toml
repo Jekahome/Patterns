@@ -27,4 +27,5 @@ members = [
   "design_patterns_GoF/structural/flyweight",
   "design_patterns_GoF/structural/proxy",
 
+  "design_patterns/private-class-data",
 ]

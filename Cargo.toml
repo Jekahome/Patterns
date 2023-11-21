@@ -28,4 +28,5 @@ members = [
   "design_patterns_GoF/structural/proxy",
 
   "design_patterns/private-class-data",
+  "design_patterns/object-pool",
 ]

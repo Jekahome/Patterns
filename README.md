@@ -1424,10 +1424,12 @@ CQRS — это стиль архитектуры, в котором опера�
 [Рефакторинг](https://sourcemaking.com/refactoring)
 
 --------------
- 
-[Rust Design Patterns](https://rust-unofficial.github.io/patterns/)
 
-[Rust Design Patterns rust-unofficial](https://github.com/rust-unofficial/patterns)
+## Sources
+ 
+[Rust Design Patterns rust-unofficial](https://rust-unofficial.github.io/patterns/)
+
+[Rust Design Patterns github.com/rust-unofficial](https://github.com/rust-unofficial/patterns)
 
 [Rust Design Patterns refactoring.guru](https://refactoring.guru/ru/design-patterns/rust)
 

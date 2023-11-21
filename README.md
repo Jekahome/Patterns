@@ -1242,14 +1242,9 @@ P.S.
 
 - ## Specification
  
-Строит правила на соответствие которых проверяются объекты
+`Pattern Specification` предлагает решение, позволяющее создавать многократно используемые бизнес-правила, которые можно комбинировать с использованием логики.
 
-Спецификация (Specification)
-   Строит ясное описание бизнес-правил, на соответствие которым могут быть проверены объекты. 
-   Композитный класс спецификация имеет один метод, называемый isSatisfiedBy, 
-   который возвращает истину или ложь в зависимости от того, удовлетворяет ли данный объект спецификации.
-
-[Specification](https://snoekiede.medium.com/simplified-precision-unraveling-the-simple-specification-pattern-in-rust-for-expressive-code-b2096deffbc7?source=user_profile---------5----------------------------)
+[Specification www.hackingwithrust.net](https://www.hackingwithrust.net/2023/11/12/simplified-precision-unraveling-the-simple-specification-pattern-in-rust-for-expressive-code-design/)
 
 # Архитектура программного обеспечения, ориентированная на шаблоны
 

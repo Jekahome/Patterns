@@ -29,4 +29,5 @@ members = [
 
   "design_patterns/private-class-data",
   "design_patterns/object-pool",
+  "design_patterns/specification",
 ]

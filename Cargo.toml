@@ -33,4 +33,5 @@ members = [
   "design_patterns/specification",
   "design_patterns/repository",
   "design_patterns/unit-of-works",
+  "design_patterns/cqrs",
 ]

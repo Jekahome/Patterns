@@ -27,7 +27,6 @@ Identity - отвечает за загрузку в кеш уникальных
 UnitOfWork - 1.собирает связанные операции с обьектами в одну транзакцию и 2.посылает один запрос на сущность в базу
 */
 
-
 // Реализация без поддержки состояния, реализация целосности бизнес транзакции и абстракция источника данных.
 // p.s. Асинронный источник данных меняет интерфейс реализации полностью.
 type ShortResult<T> = std::result::Result<T, Box<dyn std::error::Error>>;
@@ -355,7 +354,8 @@ where
     let product = product.to_owned();
     // TODO: формирование единицы работы в виде замыкания FnOnce, которая должна быть по аналогии с ACID - Атомарна и Согласованна
     let _ = uow.unit_of_work(move |db_ctx: &mut T| -> ShortResult<()> {
-        let rep_user: db_layer::SqliteUserRepository<'_, T> = db_layer::SqliteUserRepository::new(db_ctx);
+        let rep_user: db_layer::SqliteUserRepository<'_, T> =
+            db_layer::SqliteUserRepository::new(db_ctx);
         rep_user.update_user_money(user_id, total_cost)?;
 
         let user = rep_user.get_user(user_id)?;
@@ -376,7 +376,8 @@ where
 // cargo run --bin unit-of-works --features "test"
 fn main() {
     let pool: r2d2::Pool<SqliteConnectionManager> = {
-        let manager = SqliteConnectionManager::file("design_patterns/unit-of-works/db/uow_without_state.db");
+        let manager =
+            SqliteConnectionManager::file("design_patterns/unit-of-works/db/uow_without_state.db");
         r2d2::Pool::new(manager).unwrap()
     };
 
@@ -418,9 +419,9 @@ fn main() {
     show(pool, user_id);
 }
 
-fn show(pool: r2d2::Pool<SqliteConnectionManager>, user_id: i64){
+fn show(pool: r2d2::Pool<SqliteConnectionManager>, user_id: i64) {
     let conn = pool.get().unwrap();
- 
+
     let mut stmt = conn
         .prepare("SELECT id, user_id, product, total_cost FROM orders WHERE user_id = ?1")
         .unwrap();
@@ -441,8 +442,8 @@ fn show(pool: r2d2::Pool<SqliteConnectionManager>, user_id: i64){
     }
 
     let mut stmt = conn
-    .prepare("SELECT id, name, money FROM users WHERE id = ?1")
-    .unwrap();
+        .prepare("SELECT id, name, money FROM users WHERE id = ?1")
+        .unwrap();
     let user = stmt.query_row([&user_id], |row| {
         Ok(User {
             id: Id::try_from(row.get::<_, i64>(0)?).unwrap(),

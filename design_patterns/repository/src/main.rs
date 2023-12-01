@@ -413,7 +413,6 @@ pub mod db_test {
     }
 }
 
-
 // Единственный репозиторий не нуждается в `Unit Of Work` так как нет бизнес транзакции нуждающейся в контроле сохраняемого состояния не связанных сущностей!
 // Когда в системе появляются связи сущностей (репозитории), тогда есть запрос на поддержания консистентности их состояния в хранилище данных.
 
@@ -467,9 +466,8 @@ fn main() {
     */
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-    let mut controller = ControllerImpl::new(
-        FileUserRepository::new("design_patterns/repository/db").unwrap(),
-    );
+    let mut controller =
+        ControllerImpl::new(FileUserRepository::new("design_patterns/repository/db").unwrap());
     // or
     let mut controller = ControllerImpl::new(SqliteUserRepository::new().unwrap());
     // or

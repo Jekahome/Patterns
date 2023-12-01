@@ -1,0 +1,19 @@
+[package]
+name = "unit-of-works"
+version = "0.1.0-dev"
+edition = "2018"
+description = "Pattern Unit of Works (UOW)"
+authors = ["Jeka <developer@gmail.com>"]
+readme = "README.md"
+
+[dependencies]
+rusqlite = "*"
+deadpool-sqlite = "*"
+tokio = "*"
+once_cell = "1.3"
+
+r2d2_sqlite = "0.23.0" # example pool
+r2d2 = "*"
+
+[features]
+test = [] 

@@ -33,6 +33,7 @@ mod cell {
         pub chloroplasts: Vec<u8>,
         secret: u128,
     }
+
     impl Clone for SomeCell {
         fn clone(&self) -> Self {
             let _clone @ SomeCell {
@@ -58,7 +59,9 @@ mod cell {
             }
         }
     }
+
     impl Prototype for SomeCell {}
+
     impl Debug for SomeCell {
         fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
             write!(
@@ -95,6 +98,7 @@ mod cell {
                 && self.chloroplasts == *chloroplasts
         }
     }
+
     impl Default for SomeCell {
         fn default() -> Self {
             Self {
@@ -108,6 +112,7 @@ mod cell {
             }
         }
     }
+
     impl SomeCell {
         pub fn new() -> Self {
             Self::default()

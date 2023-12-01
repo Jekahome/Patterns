@@ -15,6 +15,7 @@ members = [
 
   "design_patterns_GoF/creational/builder",
   "design_patterns_GoF/creational/fabric_method",
+  "design_patterns_GoF/creational/abstract_factory",
   "design_patterns_GoF/creational/fold",
   "design_patterns_GoF/creational/prototype",
   "design_patterns_GoF/creational/singleton",
@@ -30,4 +31,6 @@ members = [
   "design_patterns/private-class-data",
   "design_patterns/object-pool",
   "design_patterns/specification",
+  "design_patterns/repository",
+  "design_patterns/unit-of-works",
 ]

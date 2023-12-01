@@ -6,7 +6,7 @@ https://rust-embedded.github.io/book/peripherals/singletons.html
 https://stackoverflow.com/questions/27791532/how-do-i-create-a-global-mutable-singleton
 */
 
-use std::sync::{Arc, Mutex, Once, ONCE_INIT};
+use std::sync::{Arc, Mutex, Once};
 use std::time::Duration;
 use std::{mem, thread};
 
@@ -20,10 +20,11 @@ struct SingletonReader {
 fn singleton() -> SingletonReader {
     // Initialize it to a null value
     static mut SINGLETON: *const SingletonReader = 0 as *const SingletonReader;
-    static ONCE: Once = ONCE_INIT;
+    static ONCE: Once = Once::new();
 
     unsafe {
         ONCE.call_once(|| {
+            println!("--ONCE--");
             // Make it
             let singleton = SingletonReader {
                 inner: Arc::new(Mutex::new(0)),

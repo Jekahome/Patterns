@@ -6,6 +6,10 @@ description = "Pattern SINGLETON"
 authors = ["Jeka <developer@gmail.com>"]
 readme = "README.md"
 
+[[example]]
+name = "atomics"
+path ="examples/atomics.rs"
+
 [dependencies]
 once_cell = "1.3"
 lazy_static = "1.4"

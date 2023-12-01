@@ -38,7 +38,8 @@
 Flyweight объясняет, когда и как можно совместно использовать объекты State.
 */
 
-// Больше примеров в idioms/Typestates
+// TODO: Больше примеров в idioms/Typestates
+
 use std::marker::PhantomData;
 
 struct SoldState; // Состояние продано

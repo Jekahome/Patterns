@@ -1,19 +1,20 @@
 # Topics
 
-* Clean Code Principles
-* Programming Paradigms
-* Что такое паттерны, зачем и почему?
-* Подходят ли ООП паттерны для Rust?
-* Rust idioms
-* Anti patterns
-* Design principles: SOLID, KISS, DRY, YAGNI
-* Gangs of Four (GoF) Design Patterns
-* * Порождающие паттерны
-* * Структурирующие паттерны
-* * Паттерны поведения
-* Design Patterns
-* Database Patterns
-* Architecture (CQRS, DDD, Layered architecture)
+* [Clean Code Principles](https://github.com/Jekahome/Patterns#clean-code-principles)
+* [Programming Paradigms](https://github.com/Jekahome/Patterns#programming-paradigms)
+* [Что такое паттерны, зачем и почему?](https://github.com/Jekahome/Patterns#%D1%87%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%B7%D0%B0%D1%87%D0%B5%D0%BC-%D0%B8-%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83)
+* [Подходят ли ООП паттерны для Rust?](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D0%B4%D1%85%D0%BE%D0%B4%D1%8F%D1%82-%D0%BB%D0%B8-%D0%BE%D0%BE%D0%BF-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%B4%D0%BB%D1%8F-rust)
+* [Rust idioms](https://github.com/Jekahome/Patterns#rust-idioms)
+* [Anti patterns](https://github.com/Jekahome/Patterns#anti-patterns)
+* [Design principles](https://github.com/Jekahome/Patterns#design-principles-solid-kiss-dry-yagni): [SOLID](https://github.com/Jekahome/Patterns#solid), [KISS](https://github.com/Jekahome/Patterns#kiss), [DRY](https://github.com/Jekahome/Patterns#dry), [YAGNI](https://github.com/Jekahome/Patterns#yagni)
+* [Gangs of Four (GoF) Design Patterns](https://github.com/Jekahome/Patterns#gangs-of-four-gof-design-patterns)
+* * [Порождающие паттерны](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D1%80%D0%BE%D0%B6%D0%B4%D0%B0%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)
+* * [Структурирующие паттерны](https://github.com/Jekahome/Patterns#%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)
+* * [Паттерны поведения](https://github.com/Jekahome/Patterns#%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%BF%D0%BE%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F)
+* [Other Design Patterns](https://github.com/Jekahome/Patterns#other-design-patterns)
+* PoSA
+* [Database Patterns](https://github.com/Jekahome/Patterns#database-patterns) ([Repository](https://github.com/Jekahome/Patterns#repository), [Unit of Work](https://github.com/Jekahome/Patterns#unit-of-work-uow), Lazy Load)
+* [Architecture](https://github.com/Jekahome/Patterns#architecture) ([CQRS](https://github.com/Jekahome/Patterns#architectural-pattern-cqrs), [DDD](https://github.com/Jekahome/Patterns#architectural-pattern-domain-driven-design-ddd), [Layered architecture](https://github.com/Jekahome/Patterns#layered-architecture))
 * [Refactoring](https://github.com/Jekahome/Patterns#refactoring)
 
 # Clean Code Principles

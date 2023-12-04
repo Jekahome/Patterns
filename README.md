@@ -1107,6 +1107,7 @@ Flyweight объясняет, когда и как можно совместно
 
 [State refactoring.guru](https://refactoring.guru/ru/design-patterns/state)
 
+[State doc.rust-lang.ru](https://doc.rust-lang.ru/book/ch17-03-oo-design-patterns.html)
 - ## Memento (Хранитель)	
 
 `Pattern Memento` (`Token`) позволяет сохранять и восстанавливать прошлые состояния объектов, не раскрывая подробностей их реализации.

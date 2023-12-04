@@ -14,7 +14,7 @@
 * Design Patterns
 * Database Patterns
 * Architecture (CQRS, DDD, Layered architecture)
-* Refactoring
+* [Refactoring](https://github.com/Jekahome/Patterns#refactoring)
 
 # Clean Code Principles
 

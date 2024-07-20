@@ -27,7 +27,9 @@
 
 * #### Ясность (Clarity):
 
-    Код должен быть написан ясно и читаемо. Имена переменных, функций и классов должны быть выразительными и информативными.
+    Код должен быть написан ясно и читаемо. 
+    Максимально избавиться от сложного кода, лучше проще и глупее (в смысле понимания другими программистами). 
+    Имена переменных, функций и классов должны быть выразительными и информативными.
     Код не должен содержать непонятных или амбигуальных частей.
 
     **Амбигуальный код** делает программу сложной для понимания и сопровождения, а также увеличивает вероятность возникновения ошибок. 
@@ -39,45 +41,1339 @@
     - Неявные преобразования типов (когда язык программирования автоматически преобразует типы данных)
     - Проблемы с параллелизмом и многопоточностью (когда порядок выполнения потоков не гарантирован)
 
+* #### Правила дизайна
+
+    1. **Держите настраиваемые данные на высоких уровнях**:
+        - Конфигурируемые данные, такие как параметры, настройки и конфигурации, следует держать на высоких уровнях системы, чтобы их можно было легко изменять и управлять ими. Это делает систему более гибкой и удобной для настройки без необходимости вносить изменения в низкоуровневый код.
+
+    2. **Предпочитайте полиморфизм конструкциям if/else или switch/case**:
+        - Вместо использования множества условных операторов (if/else или switch/case) для выбора поведения программы, лучше использовать полиморфизм. Полиморфизм позволяет создавать объекты различных классов, которые реализуют один и тот же интерфейс или наследуют от одного базового класса. Это делает код более гибким и расширяемым.
+
+    3. **Разделяйте код многопоточности**:
+        - Многопоточный код может быть сложным и трудным для отладки. Поэтому его следует изолировать и разделять от остального кода. Это делает программу более устойчивой и уменьшает вероятность возникновения ошибок, связанных с параллелизмом.
+
+    4. **Предотвращайте чрезмерную конфигурируемость**:
+        - Хотя конфигурируемость важна, её избыток может усложнить систему и сделать её трудной для понимания и сопровождения. Не стоит делать все аспекты системы настраиваемыми; следует балансировать между гибкостью и сложностью.
+
+    5. **Используйте внедрение зависимостей (Dependency Injection)**:
+        - Внедрение зависимостей означает, что объект получает (или "внедряет") свои зависимости извне, а не создаёт их самостоятельно. Это упрощает тестирование и замену зависимостей, делая код более модульным и легко поддающимся изменениям.
+
+    6. **Следуйте Закону Деметры**:
+        - Закон Деметры, также известный как принцип "не говори с незнакомцами", гласит, что объект должен взаимодействовать только со своими непосредственными зависимостями. Это значит, что объект не должен напрямую обращаться к компонентам других объектов. Соблюдение этого принципа уменьшает связанность и упрощает сопровождение кода.
+
+* #### Советы по понятности
+
+    1. **Будьте последовательны. Если вы делаете что-то определённым образом, делайте все подобные вещи таким же образом**:
+
+        - Последовательное использование одного и того же стиля кода и подходов делает ваш код более предсказуемым и легким для понимания.
+
+        ```rust
+        // Плохо: разные способы именования функций
+        fn get_user() { /* ... */ }
+        fn fetch_order() { /* ... */ }
+        fn retrieve_product() { /* ... */ }
+
+        // Хорошо: единообразный стиль именования функций
+        fn get_user() { /* ... */ }
+        fn get_order() { /* ... */ }
+        fn get_product() { /* ... */ }
+        ```
+
+    2. **Используйте поясняющие переменные**:
+
+        - Поясняющие переменные делают ваш код более читаемым и самодокументируемым.
+
+        ```rust
+        // Плохо
+        let s = "2024-07-20T12:34:56Z";
+        let t = DateTime::parse_from_rfc3339(s).unwrap();
+
+        // Хорошо
+        let date_string = "2024-07-20T12:34:56Z";
+        let parsed_date = DateTime::parse_from_rfc3339(date_string).unwrap();
+        ```
+
+    3. **Инкапсулируйте граничные условия. Граничные условия трудно отслеживать. Поместите их обработку в одно место**:
+
+        - Граничные условия (например, минимальные и максимальные значения) должны быть инкапсулированы в отдельные функции или методы для предотвращения ошибок и упрощения сопровождения.
+
+        ```rust
+        // Плохо
+        fn is_valid_age(age: u32) -> bool {
+            age >= 0 && age <= 120
+        }
+
+        // Хорошо
+        fn is_valid_age(age: u32) -> bool {
+            const MIN_AGE: u32 = 0;
+            const MAX_AGE: u32 = 120;
+            age >= MIN_AGE && age <= MAX_AGE
+        }
+        ```
+
+    4. **Предпочитайте специализированные объекты значений вместо примитивных типов**:
+
+        - Специализированные объекты (типы) делают код более выразительным и помогают предотвратить ошибки.
+
+        ```rust
+        // Плохо
+        fn calculate_total(price: f64, tax: f64) -> f64 {
+            price + tax
+        }
+
+        // Хорошо
+        struct Money {
+            amount: f64,
+        }
+
+        impl Money {
+            fn new(amount: f64) -> Self {
+                Money { amount }
+            }
+
+            fn add(&self, other: Money) -> Money {
+                Money::new(self.amount + other.amount)
+            }
+        }
+
+        let price = Money::new(100.0);
+        let tax = Money::new(20.0);
+        let total = price.add(tax);
+        ```
+
+    5. **Избегайте логической зависимости. Не пишите методы, которые работают правильно, завися от чего-то ещё в том же классе**:
+
+        - Методы должны быть независимыми и не полагаться на состояние или поведение других методов в классе.
+
+        ```rust
+        // Плохо
+        struct Order {
+            items: Vec<Item>,
+            total: f64,
+        }
+
+        impl Order {
+            fn calculate_total(&mut self) {
+                self.total = self.items.iter().map(|item| item.price).sum();
+            }
+
+            fn print_total(&self) {
+                println!("{}", self.total); // Работает правильно только после вызова calculate_total()
+            }
+        }
+
+        // Хорошо
+        struct Order {
+            items: Vec<Item>,
+        }
+
+        impl Order {
+            fn calculate_total(&self) -> f64 {
+                self.items.iter().map(|item| item.price).sum()
+            }
+
+            fn print_total(&self) {
+                println!("{}", self.calculate_total());
+            }
+        }
+        ```
+
+    6. **Избегайте отрицательных условий**:
+
+        - Положительные условия легче понимать, чем отрицательные. Переписывайте отрицательные условия на положительные, когда это возможно.
+
+        ```rust
+        // Плохо
+        fn is_not_error(status: &str) -> bool {
+            status != "error"
+        }
+
+        // Хорошо
+        fn is_success(status: &str) -> bool {
+            status == "success"
+        }
+        ```
+
+ 
+* #### Правила для функции
+
+    1. **Делайте только одно**:
+        - Функция должна выполнять только одну задачу. Это делает её более понятной, легко тестируемой и повторно используемой. 
+
+        ```rust
+        // Плохо
+        fn process_order(order: &Order) {
+            validate_order(order);
+            save_to_database(order);
+            send_confirmation_email(order);
+        }
+
+        // Хорошо
+        fn validate_order(order: &Order) -> bool {
+            // Логика валидации заказа
+        }
+
+        fn save_to_database(order: &Order) {
+            // Логика сохранения заказа в базу данных
+        }
+
+        fn send_confirmation_email(order: &Order) {
+            // Логика отправки подтверждающего письма
+        }
+
+        ```
+
+    2. **Предпочитайте меньшее количество аргументов**:
+        - Ограничивайте количество аргументов функции. Идеально, когда их не больше трёх. Если их больше, подумайте о создании объекта для их объединения.
+
+        ```rust
+        // Плохо
+        fn create_user(name: &str, age: u32, email: &str, address: &str) {
+            // Логика создания пользователя
+        }
+
+        // Хорошо
+        struct User {
+            name: String,
+            age: u32,
+            email: String,
+            address: String,
+        }
+
+        fn create_user(user: User) {
+            // Логика создания пользователя
+        }
+
+        ```
+
+    3. **Не имейте побочных эффектов**:
+        - Функции не должны изменять состояние программы вне своего тела. Избегайте изменения глобальных переменных или изменения аргументов.
+
+        ```rust
+        // Плохо
+        static mut GLOBAL_STATE: HashMap<String, String> = HashMap::new();
+
+        fn update_state(key: String, value: String) {
+            unsafe {
+                GLOBAL_STATE.insert(key, value);
+            }
+        }
+
+        // Хорошо
+        fn update_state(state: &mut HashMap<String, String>, key: String, value: String) {
+            state.insert(key, value);
+        }
+
+        ```
+
+    4. **Не используйте флаговые аргументы. Разделите метод на несколько независимых методов, которые могут быть вызваны клиентом без флага**:
+        - Флаговые аргументы указывают на то, что функция выполняет более одной задачи. Разделите такие функции на несколько, каждая из которых выполняет свою собственную задачу.
+
+        ```rust
+        // Плохо
+        fn set_user_status(user: &mut User, active: bool) {
+            if active {
+                user.status = "active".to_string();
+            } else {
+                user.status = "inactive".to_string();
+            }
+        }
+
+        // Хорошо
+        fn activate_user(user: &mut User) {
+            user.status = "active".to_string();
+        }
+
+        fn deactivate_user(user: &mut User) {
+            user.status = "inactive".to_string();
+        }
+
+        ```
+
+* #### Правила комментариев
+ 
+    1. **Всегда старайтесь объяснять себя в коде**:
+        - Пишите код таким образом, чтобы он был самодокументируемым. Используйте понятные имена переменных, функций и классов, чтобы минимизировать необходимость в комментариях.
+
+        ```rust
+        // Плохо
+        // Функция для проверки, является ли пользователь активным
+        fn check(user: &User) -> bool {
+            user.status == "active"
+        }
+
+        // Хорошо
+        fn is_user_active(user: &User) -> bool {
+            user.status == "active"
+        }
+        ```
+
+    2. **Не будьте избыточными**:
+        - Не добавляйте комментарии, которые просто повторяют то, что уже очевидно из кода.
+
+        ```rust
+        // Плохо
+        let x = x + 1; // Увеличиваем x на 1
+
+        // Хорошо
+        let x = x + 1;
+
+        ```
+
+    3. **Не добавляйте очевидный шум**:
+        - Избегайте комментариев, которые не добавляют никакой ценности и только засоряют код.
+
+        ```rust
+        // Плохо
+        let mut i = 0; // Устанавливаем i в 0
+
+        // Хорошо
+        let mut i = 0;
+
+        ```
+
+    4. **Не используйте комментарии закрывающей скобки**:
+        - Нет необходимости добавлять комментарии после закрывающей скобки, так как современный код, как правило, короткий и читаемый.
+
+        ```rust
+        // Плохо
+        if condition {
+            do_something();
+        } // Конец if
+
+        // Хорошо
+        if condition {
+            do_something();
+        }
+
+        ```
+
+    5. **Не комментируйте код. Просто удаляйте его**:
+        - Закомментированный код создает беспорядок и затрудняет чтение. Если код не нужен, лучше его удалить.
+
+        ```rust
+        // Плохо
+        // fn old_function() {
+        //     // старый код
+        // }
+
+        // Хорошо
+        fn new_function() {
+            // новый код
+        }
+
+        ```
+
+    6. **Используйте комментарии для объяснения намерений**:
+        - Объясняйте, почему вы что-то делаете, особенно если это не очевидно из самого кода.
+
+        ```rust
+        // Плохо
+        let result = calculate();
+
+        // Хорошо
+        // Используем временную переменную для хранения результата вычислений
+        let result = calculate();
+
+        ```
+
+    7. **Используйте комментарии для пояснения кода**:
+        - Объясняйте сложные или нетривиальные части кода, чтобы облегчить понимание другим разработчикам.
+
+        ```rust
+        // Плохо
+        let data = fetch_data();
+
+        // Хорошо
+        // Получаем данные из внешнего API и преобразуем их в формат JSON
+        let data = fetch_data();
+
+        ```
+
+    8. **Используйте комментарии для предупреждения о последствиях**:
+        - Указывайте на возможные последствия или побочные эффекты, особенно если они не очевидны.
+
+        ```rust
+        // Плохо
+        delete_user(user_id);
+
+        // Хорошо
+        // Удаление пользователя приведет к удалению всех связанных данных
+        delete_user(user_id);
+
+    ```
+
+* #### Структура исходного кода
+
+    1. **Разделяйте концепции вертикально**:
+
+        - Размещайте разные концепции на отдельных участках кода. Это делает код более организованным и читабельным.
+           "разделение концепций вертикально" - означает организацию кода таким образом, чтобы разные концепции, функциональные блоки или уровни абстракции были размещены в разных частях файла или модуля, а не перемешаны друг с другом.
+
+        ```rust
+        // Плохо
+        fn calculate_area(length: f64, width: f64) -> f64 {
+            length * width
+        }
+
+        fn process_order(order: &Order) {
+            // Логика обработки заказа
+        }
+
+        fn is_valid_age(age: u32) -> bool {
+            age >= 0 && age <= 120
+        }
+
+        // Хорошо
+        fn calculate_area(length: f64, width: f64) -> f64 {
+            length * width
+        }
+
+        fn is_valid_age(age: u32) -> bool {
+            age >= 0 && age <= 120
+        }
+
+        fn process_order(order: &Order) {
+            // Логика обработки заказа
+        }
+        ```
+
+    2. **Связанный код должен быть размещён плотно вертикально**:
+
+        - Код, который тесно связан, должен быть размещён вместе, чтобы облегчить его понимание.
+
+        ```rust
+        // Плохо
+        fn add_item(order: &mut Order, item: Item) {
+            order.items.push(item);
+        }
+
+        fn calculate_total(order: &Order) -> f64 {
+            order.items.iter().map(|item| item.price).sum()
+        }
+
+        struct Item {
+            price: f64,
+        }
+
+        struct Order {
+            items: Vec<Item>,
+        }
+
+        // Хорошо
+        struct Item {
+            price: f64,
+        }
+
+        struct Order {
+            items: Vec<Item>,
+        }
+
+        fn add_item(order: &mut Order, item: Item) {
+            order.items.push(item);
+        }
+
+        fn calculate_total(order: &Order) -> f64 {
+            order.items.iter().map(|item| item.price).sum()
+        }
+        ```
+
+    3. **Объявляйте переменные близко к месту их использования**:
+
+        - Это уменьшает область видимости переменных и облегчает понимание кода.
+
+        ```rust
+        // Плохо
+        let mut total = 0.0;
+        for item in &order.items {
+            total += item.price;
+        }
+        println!("Total: {}", total);
+
+        // Хорошо
+        let total: f64 = order.items.iter().map(|item| item.price).sum();
+        println!("Total: {}", total);
+        ```
+
+    4. **Зависимые функции должны быть близко**:
+
+        - Функции, которые зависят друг от друга, должны быть расположены рядом для облегчения понимания их взаимодействия.
+
+        ```rust
+        // Плохо
+        fn process_payment() {
+            // ...
+        }
+
+        fn validate_order(order: &Order) {
+            // ...
+        }
+
+        fn complete_order(order: &Order) {
+            validate_order(order);
+            process_payment();
+            // ...
+        }
+
+        // Хорошо
+        fn validate_order(order: &Order) {
+            // ...
+        }
+
+        fn process_payment() {
+            // ...
+        }
+
+        fn complete_order(order: &Order) {
+            validate_order(order);
+            process_payment();
+            // ...
+        }
+        ```
+
+    5. **Похожие функции должны быть близко**:
+
+        - Функции, которые выполняют схожие задачи, должны быть расположены рядом для облегчения их поиска и понимания.
+
+        ```rust
+        // Плохо
+        fn add_item(order: &mut Order, item: Item) {
+            order.items.push(item);
+        }
+
+        fn calculate_total(order: &Order) -> f64 {
+            order.items.iter().map(|item| item.price).sum()
+        }
+
+        fn remove_item(order: &mut Order, item_id: usize) {
+            order.items.remove(item_id);
+        }
+
+        // Хорошо
+        fn add_item(order: &mut Order, item: Item) {
+            order.items.push(item);
+        }
+
+        fn remove_item(order: &mut Order, item_id: usize) {
+            order.items.remove(item_id);
+        }
+
+        fn calculate_total(order: &Order) -> f64 {
+            order.items.iter().map(|item| item.price).sum()
+        }
+        ```
+
+    6. **Размещайте функции в нисходящем порядке**:
+
+        - Функции должны быть размещены таким образом, чтобы каждая функция использовала функции, определённые выше неё.
+
+        ```rust
+        // Плохо
+        fn process_order(order: &Order) {
+            let total = calculate_total(order);
+            println!("Total: {}", total);
+        }
+
+        fn calculate_total(order: &Order) -> f64 {
+            order.items.iter().map(|item| item.price).sum()
+        }
+
+        // Хорошо
+        fn calculate_total(order: &Order) -> f64 {
+            order.items.iter().map(|item| item.price).sum()
+        }
+
+        fn process_order(order: &Order) {
+            let total = calculate_total(order);
+            println!("Total: {}", total);
+        }
+        ```
+
+    7. **Держите строки короткими**:
+
+        - Короткие строки облегчают чтение кода и предотвращают горизонтальный скроллинг.
+
+        ```rust
+        // Плохо
+        let very_long_variable_name = "This is a very long string that exceeds the recommended line length for readability";
+
+        // Хорошо
+        let very_long_variable_name = "This is a very long string \
+                                    that exceeds the recommended \
+                                    line length for readability";
+        ```
+
+    8. **Не используйте горизонтальное выравнивание**:
+
+        - Горизонтальное выравнивание переменных и комментариев затрудняет внесение изменений и поддержание кода.
+          Когда вы выравниваете переменные и комментарии по горизонтали, изменение одного элемента может потребовать перестановки остальных элементов на той же линии. 
+
+        ```rust
+        // Плохо
+        let first_variable  = 1;    // Первый комментарий
+        let second_variable = 2;    // Второй комментарий
+
+        // Хорошо
+        let first_variable = 1;  // Первый комментарий
+        let second_variable = 2; // Второй комментарий
+        ```
+
+    9. **Используйте пробелы для связывания связанных элементов и разделения слабо связанных**:
+
+        - Используйте пробелы для визуального разделения разных блоков кода и связывания логически связанных частей.
+
+        ```rust
+        // Плохо
+        let a = 1;
+        let b = 2;
+        let c = 3;
+
+        if a > b {
+            println!("a is greater than b");
+        }
+        let result = a + b + c;
+        println!("Result: {}", result);
+
+        // Хорошо
+        let a = 1;
+        let b = 2;
+        let c = 3;
+
+        if a > b {
+            println!("a is greater than b");
+        }
+
+        let result = a + b + c;
+        println!("Result: {}", result);
+        ```
+
+    10. **Не нарушайте отступы**:
+
+        - Следуйте стандартным правилам отступов для вашего языка программирования, чтобы поддерживать код в читаемом состоянии.
+
+        ```rust
+        // Плохо
+        fn main() {
+        let x = 5;
+            if x > 0 {
+            println!("x is positive");
+            }
+        }
+
+        // Хорошо
+        fn main() {
+            let x = 5;
+            if x > 0 {
+                println!("x is positive");
+            }
+        }
+        ```
+
+* #### Объекты и структуры данных
+
+ 
+    1. **Скрывайте внутреннюю структуру**
+
+    Скрытие внутренней структуры помогает избежать зависимостей от деталей реализации и делает ваш код более устойчивым к изменениям.
+
+    **Пример:**
+
+    ```rust
+    // Плохо: внутренние детали структуры видны
+    pub struct Order {
+        pub items: Vec<Item>,
+        pub total: f64,
+    }
+
+    // Хорошо: скрытие деталей внутренней структуры
+    pub struct Order {
+        items: Vec<Item>,
+        total: f64,
+    }
+
+    impl Order {
+        pub fn new() -> Self {
+            Order {
+                items: Vec::new(),
+                total: 0.0,
+            }
+        }
+
+        pub fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+            self.update_total();
+        }
+
+        pub fn get_total(&self) -> f64 {
+            self.total
+        }
+
+        fn update_total(&mut self) {
+            self.total = self.items.iter().map(|item| item.price).sum();
+        }
+    }
+    ```
+
+    2. **Предпочитайте структуры данных**
+
+    Использование простых структур данных, таких как `struct` в Rust, помогает избежать излишнего усложнения и повышает ясность.
+
+    **Пример:**
+
+    ```rust
+    // Плохо: сложный объект с множеством методов и состояний
+    pub struct Order {
+        items: Vec<Item>,
+        total: f64,
+    }
+
+    impl Order {
+        pub fn new() -> Self {
+            // ...
+        }
+
+        pub fn add_item(&mut self, item: Item) {
+            // ...
+        }
+
+        pub fn calculate_total(&self) -> f64 {
+            // ...
+        }
+    }
+
+    // Хорошо: простая структура данных
+    pub struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        pub fn new() -> Self {
+            Order {
+                items: Vec::new(),
+            }
+        }
+
+        pub fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+        }
+
+        pub fn calculate_total(&self) -> f64 {
+            self.items.iter().map(|item| item.price).sum()
+        }
+    }
+    ```
+
+    3. **Избегайте гибридных структур (половина объект, половина данные)**
+
+    Гибридные структуры, которые смешивают поведение и данные, могут быть трудны для понимания и сопровождения. Стремитесь к тому, чтобы структура данных и объекты имели ясное разделение.
+
+    **Пример:**
+
+    ```rust
+    // Плохо: гибридная структура
+    pub struct Order {
+        items: Vec<Item>,
+        pub total: f64,
+    }
+
+    impl Order {
+        pub fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+            self.total += item.price; // Гибридный подход
+        }
+    }
+
+    // Хорошо: разделение данных и поведения
+    pub struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        pub fn new() -> Self {
+            Order {
+                items: Vec::new(),
+            }
+        }
+
+        pub fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+        }
+
+        pub fn calculate_total(&self) -> f64 {
+            self.items.iter().map(|item| item.price).sum()
+        }
+    }
+    ```
+
+    4. **Объекты и структуры данных должны быть маленькими**
+
+    Меньшие объекты и структуры данных легче понимать и поддерживать.
+
+    **Пример:**
+
+    ```rust
+    // Плохо: большая структура с множеством переменных и методов
+    pub struct Order {
+        items: Vec<Item>,
+        total: f64,
+        // Дополнительные переменные и методы
+    }
+
+    // Хорошо: небольшие и сфокусированные структуры
+    pub struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        pub fn new() -> Self {
+            Order {
+                items: Vec::new(),
+            }
+        }
+
+        pub fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+        }
+    }
+    ```
+
+    5. **Объекты должны делать одно дело**
+
+    Объекты и структуры данных должны быть сфокусированы на выполнении одной задачи.
+
+    **Пример:**
+
+    ```rust
+    // Плохо: объект делает слишком много вещей
+    pub struct Order {
+        items: Vec<Item>,
+        total: f64,
+        // Методы для обработки и расчета
+    }
+
+    // Хорошо: объект делает только одно дело
+    pub struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        pub fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+        }
+
+        pub fn calculate_total(&self) -> f64 {
+            self.items.iter().map(|item| item.price).sum()
+        }
+    }
+    ```
+
+    6. **Малое количество переменных экземпляра**
+
+    Минимизируйте количество переменных экземпляра, чтобы объект был более простым и понятным.
+
+    **Пример:**
+
+    ```rust
+    // Плохо: много переменных экземпляра
+    pub struct Order {
+        items: Vec<Item>,
+        total: f64,
+        discount: f64,
+        // Дополнительные переменные
+    }
+
+    // Хорошо: минимальное количество переменных
+    pub struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        pub fn new() -> Self {
+            Order {
+                items: Vec::new(),
+            }
+        }
+
+        pub fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+        }
+    }
+    ```
+
+    7. **Базовый класс не должен знать о своих производных**
+
+    В объектно-ориентированном программировании базовый класс не должен иметь зависимости от своих производных классов. В Rust это может быть реализовано через использование трейтів и неявных зависимостей.
+
+    **Пример:**
+
+    ```rust
+    // Плохо: базовый класс знает о производных
+    pub trait Animal {
+        fn make_sound(&self) -> String;
+    }
+
+    pub struct Dog;
+
+    impl Animal for Dog {
+        fn make_sound(&self) -> String {
+            "Woof".to_string()
+        }
+    }
+
+    pub struct Cat;
+
+    impl Animal for Cat {
+        fn make_sound(&self) -> String {
+            "Meow".to_string()
+        }
+    }
+
+    // Хорошо: базовый класс не знает о производных
+    pub trait Animal {
+        fn make_sound(&self) -> String;
+    }
+
+    pub struct Dog;
+
+    impl Animal for Dog {
+        fn make_sound(&self) -> String {
+            "Woof".to_string()
+        }
+    }
+
+    pub struct Cat;
+
+    impl Animal for Cat {
+        fn make_sound(&self) -> String {
+            "Meow".to_string()
+        }
+    }
+    ```
+
+    8. **Лучше иметь много функций, чем передавать код в функцию для выбора поведения**
+
+    Разделение кода на множество функций позволяет лучше организовать логику и избежать сложных конструкций, таких как флаговые аргументы.
+
+    **Пример:**
+
+    ```rust
+    // Плохо: использование флага для выбора поведения
+    pub fn handle_order(order: &Order, use_discount: bool) {
+        if use_discount {
+            // Применение скидки
+        } else {
+            // Без скидки
+        }
+    }
+
+    // Хорошо: использование отдельных функций
+    pub fn handle_order_with_discount(order: &Order) {
+        // Применение скидки
+    }
+
+    pub fn handle_order_without_discount(order: &Order) {
+        // Без скидки
+    }
+    ```
+
+    9. **Предпочитайте нестатические методы статическим**
+
+    Нестатические методы позволяют работать с экземплярами класса и поддерживают полиморфизм, тогда как статические методы не могут использовать состояние экземпляра.
+
+    **Пример:**
+
+    ```rust
+    // Плохо: статические методы, которые могут использовать состояние экземпляра
+    pub struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        pub fn calculate_total(items: &[Item]) -> f64 {
+            items.iter().map(|item| item.price).sum()
+        }
+    }
+
+    // Хорошо: нестатические методы для работы с состоянием экземпляра
+    pub struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        pub fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+        }
+
+        pub fn calculate_total(&self) -> f64 {
+            self.items.iter().map(|item| item.price).sum()
+        }
+    }
+    ```
+
+* #### Code smells
+ 
+    Кодовые запахи (code smells) — это признаки того, что код может содержать потенциальные проблемы или области для улучшения. Вот основные кодовые запахи и их описание, а также примеры на Rust и способы их устранения:
+
+    1. **Rigidity (Жесткость)**
+
+    **Описание:**
+    Программное обеспечение становится трудным для изменения, поскольку небольшое изменение вызывает каскад последующих изменений. Это происходит из-за сильных зависимостей между компонентами системы.
+
+    **Пример на Rust:**
+
+    ```rust
+    // Плохо: жесткий код
+    struct Order {
+        items: Vec<Item>,
+        discount: f64,
+    }
+
+    impl Order {
+        fn new() -> Self {
+            Order {
+                items: Vec::new(),
+                discount: 0.0,
+            }
+        }
+
+        fn apply_discount(&mut self) {
+            let total = self.items.iter().map(|item| item.price).sum::<f64>();
+            self.discount = total * 0.1;
+        }
+    }
+
+    struct Item {
+        price: f64,
+    }
+
+    // Изменение структуры Item потребует изменения в Order
+    ```
+
+    **Как исправить:**
+
+    Используйте абстракции, такие как трейты и интерфейсы, чтобы уменьшить взаимные зависимости.
+
+    ```rust
+    trait DiscountStrategy {
+        fn apply_discount(&self, total: f64) -> f64;
+    }
+
+    struct PercentageDiscount;
+
+    impl DiscountStrategy for PercentageDiscount {
+        fn apply_discount(&self, total: f64) -> f64 {
+            total * 0.1
+        }
+    }
+
+    struct Order<T: DiscountStrategy> {
+        items: Vec<Item>,
+        discount_strategy: T,
+    }
+
+    impl<T: DiscountStrategy> Order<T> {
+        fn new(discount_strategy: T) -> Self {
+            Order {
+                items: Vec::new(),
+                discount_strategy,
+            }
+        }
+
+        fn apply_discount(&self) -> f64 {
+            let total = self.items.iter().map(|item| item.price).sum();
+            self.discount_strategy.apply_discount(total)
+        }
+    }
+    ```
+
+    2. **Fragility (Хрупкость)**
+
+    **Описание:**
+    Программное обеспечение ломается в нескольких местах из-за одного изменения. Это часто вызвано слишком сильной связью между компонентами.
+
+    **Пример на Rust:**
+
+    ```rust
+    // Плохо: хрупкий код
+    struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+            self.update_inventory();
+        }
+
+        fn update_inventory(&self) {
+            // Логика обновления инвентаря
+        }
+    }
+
+    struct Item {
+        price: f64,
+    }
+    ```
+
+    **Как исправить:**
+
+    Разделите ответственность между компонентами и используйте принципы инкапсуляции и декомпозиции.
+
+    ```rust
+    struct Inventory;
+
+    impl Inventory {
+        fn update(&self) {
+            // Логика обновления инвентаря
+        }
+    }
+
+    struct Order {
+        items: Vec<Item>,
+        inventory: Inventory,
+    }
+
+    impl Order {
+        fn add_item(&mut self, item: Item) {
+            self.items.push(item);
+            self.inventory.update();
+        }
+    }
+    ```
+
+    3. **Immobility (Иммобильность)**
+
+    **Описание:**
+    Невозможно повторно использовать части кода в других проектах из-за связанных рисков и высоких затрат.
+
+    **Пример на Rust:**
+
+    ```rust
+    // Плохо: сложно повторно использовать
+    struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        fn calculate_total(&self) -> f64 {
+            self.items.iter().map(|item| item.price).sum()
+        }
+
+        fn apply_discount(&self) -> f64 {
+            let total = self.calculate_total();
+            total * 0.1
+        }
+    }
+    ```
+
+    **Как исправить:**
+
+    Сделайте ваш код более модульным и независимым, выделяя общие компоненты в библиотеки.
+
+    ```rust
+    pub struct Item {
+        pub price: f64,
+    }
+
+    pub trait DiscountStrategy {
+        fn apply_discount(&self, total: f64) -> f64;
+    }
+
+    pub struct PercentageDiscount;
+
+    impl DiscountStrategy for PercentageDiscount {
+        fn apply_discount(&self, total: f64) -> f64 {
+            total * 0.1
+        }
+    }
+
+    pub struct Order<'a, T: DiscountStrategy> {
+        pub items: Vec<Item>,
+        discount_strategy: &'a T,
+    }
+
+    impl<'a, T: DiscountStrategy> Order<'a, T> {
+        pub fn new(discount_strategy: &'a T) -> Self {
+            Order {
+                items: Vec::new(),
+                discount_strategy,
+            }
+        }
+
+        pub fn calculate_total(&self) -> f64 {
+            self.items.iter().map(|item| item.price).sum()
+        }
+
+        pub fn apply_discount(&self) -> f64 {
+            let total = self.calculate_total();
+            self.discount_strategy.apply_discount(total)
+        }
+    }
+    ```
+
+    4. **Needless Complexity (Избыточная сложность)**
+
+    **Описание:**
+    Код содержит ненужные усложнения, которые делают его трудным для понимания и поддержки.
+
+    **Пример на Rust:**
+
+    ```rust
+    // Плохо: избыточная сложность
+    struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        fn calculate(&self, tax: f64, discount: f64) -> f64 {
+            let subtotal = self.items.iter().map(|item| item.price).sum::<f64>();
+            let taxed = subtotal * (1.0 + tax);
+            let discounted = taxed - discount;
+            discounted
+        }
+    }
+    ```
+
+    **Как исправить:**
+
+    Разделите код на более простые и понятные части.
+
+    ```rust
+    struct Order {
+        items: Vec<Item>,
+    }
+
+    impl Order {
+        fn subtotal(&self) -> f64 {
+            self.items.iter().map(|item| item.price).sum()
+        }
+
+        fn total(&self, tax: f64, discount: f64) -> f64 {
+            let subtotal = self.subtotal();
+            let taxed = subtotal * (1.0 + tax);
+            taxed - discount
+        }
+    }
+    ```
+
+    5. **Needless Repetition (Избыточное повторение)**
+
+    **Описание:**
+    Код содержит повторяющиеся фрагменты, что делает его сложным для поддержки и увеличивает вероятность ошибок.
+
+    **Пример на Rust:**
+
+    ```rust
+    // Плохо: избыточное повторение
+    fn calculate_price(item: &Item, quantity: u32) -> f64 {
+        item.price * quantity as f64
+    }
+
+    fn calculate_total(order: &Order) -> f64 {
+        let mut total = 0.0;
+        for item in &order.items {
+            total += calculate_price(item, 1); // Количество всегда 1
+        }
+        total
+    }
+    ```
+
+    **Как исправить:**
+
+    Используйте общие функции и абстракции для устранения повторений.
+
+    ```rust
+    fn calculate_price(item: &Item, quantity: u32) -> f64 {
+        item.price * quantity as f64
+    }
+
+    fn calculate_total(order: &Order) -> f64 {
+        order.items.iter().map(|item| calculate_price(item, 1)).sum()
+    }
+    ```
+
+    6. **Opacity (Непрозрачность)**
+
+    **Описание:**
+    Код трудно понять из-за неясных или запутанных конструкций, что затрудняет его поддержку.
+
+    **Пример на Rust:**
+
+    ```rust
+    // Плохо: непрозрачный код
+    fn process_data(data: &str) -> String {
+        let mut result = String::new();
+        for c in data.chars() {
+            if c.is_alphabetic() {
+                result.push(c.to_ascii_uppercase());
+            } else if c.is_numeric() {
+                result.push('0');
+            }
+        }
+        result
+    }
+    ```
+
+    **Как исправить:**
+
+    Упрощайте код и добавляйте комментарии, чтобы сделать его более понятным.
+
+    ```rust
+    fn process_data(data: &str) -> String {
+        let mut result = String::new();
+        
+        for c in data.chars() {
+            if c.is_alphabetic() {
+                result.push(c.to_ascii_uppercase());
+            } else if c.is_numeric() {
+                result.push('0'); // Заменяем цифры на '0'
+            }
+        }
+        
+        result
+    }
+    ```
+
 
 * #### Минимизация повторений (DRY - Don't Repeat Yourself):
 
-Избегайте дублирования кода. Если у вас есть повторяющийся код, вынесите его в отдельную функцию, метод или класс.
+    Избегайте дублирования кода. Если у вас есть повторяющийся код, вынесите его в отдельную функцию, метод или класс.
 
 * #### Маленькие функции (Small Functions):
 
-Функции должны быть небольшими и выполнять одну четко определенную задачу.
-Если функция становится слишком большой, разделите ее на более мелкие функции с понятными именами.
+    Функции должны быть небольшими и выполнять одну четко определенную задачу.
+    Если функция становится слишком большой, разделите ее на более мелкие функции с понятными именами.
 
 * #### Принцип единственной ответственности (Single Responsibility Principle - SRP):
 
-Каждый класс или функция должны быть ответственными только за одну вещь. Это облегчает понимание и изменение кода.
+    Каждый класс или функция должны быть ответственными только за одну вещь. Это облегчает понимание и изменение кода.
 
 * #### Принцип открытости/закрытости (Open/Closed Principle - OCP):
 
-Код должен быть открыт для расширения, но закрыт для модификации. Это достигается путем использования абстракций и полиморфизма.
+    Код должен быть открыт для расширения, но закрыт для модификации. Это достигается путем использования абстракций и полиморфизма.
 
 * #### Соблюдение стандартов форматирования:
 
-Используйте стандарты форматирования кода, чтобы обеспечить единообразие внутри проекта. Это может включать в себя правила отступов, расположение фигурных скобок и т.д.
+    Используйте стандарты форматирования кода, чтобы обеспечить единообразие внутри проекта. Это может включать в себя правила отступов, расположение фигурных скобок и т.д.
 
 * #### Тестирование:
 
-Пишите тесты для вашего кода, чтобы обеспечить его корректность и устойчивость к изменениям.
-Следуйте принципу "Тестирование приводит к чистому коду".
+    Пишите тесты для вашего кода, чтобы обеспечить его корректность и устойчивость к изменениям.
+    Следуйте принципу "Тестирование приводит к чистому коду".
 
 * #### Если нашли место для рефакторинга, следует это рефакторить:
 
-При внесении изменений в код, следите за тем, чтобы код оставался чистым или становился чище, чем был до ваших изменений.
+    При внесении изменений в код, следите за тем, чтобы код оставался чистым или становился чище, чем был до ваших изменений.
+    Правило бойскаута. Оставьте место стоянки чище, чем оно было до вас.
 
 * #### Избегание магических чисел и строк:
 
-Избегайте использования "магических" (хардкодированных) чисел и строк. Используйте константы или переменные с понятными именами.
+    Избегайте использования "магических" (хардкодированных) чисел и строк. Используйте константы или переменные с понятными именами.
 
 * #### Комментарии с умеренностью:
 
-Комментарии должны использоваться только там, где это действительно необходимо для понимания кода. Избегайте лишних или бессмысленных комментариев.
-Эти принципы и многие другие детали описаны в книге Роберта Мартина "Clean Code", которая является отличным ресурсом для разработчиков, стремящихся писать чистый, поддерживаемый и эффективный код.
+    Комментарии должны использоваться только там, где это действительно необходимо для понимания кода. Избегайте лишних или бессмысленных комментариев.
+    Эти принципы и многие другие детали описаны в книге Роберта Мартина "Clean Code", которая является отличным ресурсом для разработчиков, стремящихся писать чистый, поддерживаемый и эффективный код.
 
 **p.s.** читать «Совершенный код» (Code Complete) Макконнелла ....
 

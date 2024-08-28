@@ -34,4 +34,5 @@ members = [
   "design_patterns/repository",
   "design_patterns/unit-of-works",
   "design_patterns/cqrs",
+  "design_patterns/dependency-injection",
 ]

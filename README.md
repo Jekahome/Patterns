@@ -1850,6 +1850,8 @@ GRASP (general responsibility assignment software patterns — общие шаб
 
 [Builder www.sourcecodeexamples.net](https://www.sourcecodeexamples.net/2023/10/builder-design-pattern-in-rust.html)
 
+[Builder www.lurklurk.org](https://www.lurklurk.org/effective-rust/builders.html)
+
 - ## Fold
 
 Создание новой коллекции посредством изменения элементов применив соответсвующий реализованный алгоритм.

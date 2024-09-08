@@ -7,7 +7,7 @@
 * [Подходят ли ООП паттерны для Rust?](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D0%B4%D1%85%D0%BE%D0%B4%D1%8F%D1%82-%D0%BB%D0%B8-%D0%BE%D0%BE%D0%BF-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%B4%D0%BB%D1%8F-rust)
 * [Rust idioms](https://github.com/Jekahome/Patterns#rust-idioms)
 * [Anti patterns](https://github.com/Jekahome/Patterns#anti-patterns)
-* [Design principles](https://github.com/Jekahome/Patterns#design-principles-solid-kiss-dry-yagni-grasp): [SOLID](https://github.com/Jekahome/Patterns#solid), [KISS](https://github.com/Jekahome/Patterns#kiss), [DRY](https://github.com/Jekahome/Patterns#dry), [YAGNI](https://github.com/Jekahome/Patterns#yagni), [GRASP](https://github.com/Jekahome/Patterns#grasp), [LoD](https://github.com/Jekahome/Patterns#LoD), [SoC](https://github.com/Jekahome/Patterns#SoC)
+* [Design principles](https://github.com/Jekahome/Patterns#design-principles-solid-kiss-dry-yagni-grasp): [SOLID](https://github.com/Jekahome/Patterns?tab=readme-ov-file#solid), [KISS](https://github.com/Jekahome/Patterns?tab=readme-ov-file#kiss), [DRY](https://github.com/Jekahome/Patterns?tab=readme-ov-file#dry), [YAGNI](https://github.com/Jekahome/Patterns?tab=readme-ov-file#yagni), [GRASP](https://github.com/Jekahome/Patterns?tab=readme-ov-file#grasp), [LoD](https://github.com/Jekahome/Patterns?tab=readme-ov-file#lod), [SoC](https://github.com/Jekahome/Patterns?tab=readme-ov-file#soc)
 * [Gangs of Four (GoF) Design Patterns](https://github.com/Jekahome/Patterns#gangs-of-four-gof-design-patterns)
 * * [Порождающие паттерны](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D1%80%D0%BE%D0%B6%D0%B4%D0%B0%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)
 * * [Структурирующие паттерны](https://github.com/Jekahome/Patterns#%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)
@@ -1590,7 +1590,7 @@ println!("{}", (1..11).fold(0, |a, b| a + b));
 Предпочитайте нормальную модель бизнес логики(иногда называют Rich Domain Model), а не процедурную, анемичную модель с DTO вместо полноценных сущностей. Анемичная модель не имеет ничего общего с ООП и ее следует рассматривать как неудачный пример процедурного программирования.
 
 
-# Design principles: SOLID, KISS, DRY, YAGNI, GRASP
+# Design principles: SOLID, KISS, DRY, YAGNI, GRASP, LoD, SoC
 
 #### SOLID
 

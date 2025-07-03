@@ -7,7 +7,7 @@
 * [Подходят ли ООП паттерны для Rust?](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D0%B4%D1%85%D0%BE%D0%B4%D1%8F%D1%82-%D0%BB%D0%B8-%D0%BE%D0%BE%D0%BF-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%B4%D0%BB%D1%8F-rust)
 * [Rust idioms](https://github.com/Jekahome/Patterns#rust-idioms)
 * [Anti patterns](https://github.com/Jekahome/Patterns#anti-patterns)
-* [Design principles](https://github.com/Jekahome/Patterns?tab=readme-ov-file#design-principles-solid-kiss-dry-yagni-grasp-lod-soc): [SOLID](https://github.com/Jekahome/Patterns?tab=readme-ov-file#solid), [KISS](https://github.com/Jekahome/Patterns?tab=readme-ov-file#kiss), [DRY](https://github.com/Jekahome/Patterns?tab=readme-ov-file#dry), [YAGNI](https://github.com/Jekahome/Patterns?tab=readme-ov-file#yagni), [GRASP](https://github.com/Jekahome/Patterns?tab=readme-ov-file#grasp), [LoD](https://github.com/Jekahome/Patterns?tab=readme-ov-file#lod), [SoC](https://github.com/Jekahome/Patterns?tab=readme-ov-file#soc)
+* [Design principles](https://github.com/Jekahome/Patterns?tab=readme-ov-file#design-principles-solid-kiss-dry-yagni-grasp-lod-soc-sla): [SOLID](https://github.com/Jekahome/Patterns?tab=readme-ov-file#solid), [KISS](https://github.com/Jekahome/Patterns?tab=readme-ov-file#kiss), [DRY](https://github.com/Jekahome/Patterns?tab=readme-ov-file#dry), [YAGNI](https://github.com/Jekahome/Patterns?tab=readme-ov-file#yagni), [GRASP](https://github.com/Jekahome/Patterns?tab=readme-ov-file#grasp), [LoD](https://github.com/Jekahome/Patterns?tab=readme-ov-file#lod), [SoC](https://github.com/Jekahome/Patterns?tab=readme-ov-file#soc)
 * [Gangs of Four (GoF) Design Patterns](https://github.com/Jekahome/Patterns#gangs-of-four-gof-design-patterns)
 * * [Порождающие паттерны](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D1%80%D0%BE%D0%B6%D0%B4%D0%B0%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)
 * * [Структурирующие паттерны](https://github.com/Jekahome/Patterns#%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)
@@ -1856,7 +1856,7 @@ Rust делает упор на **статический полиморфизм 
 
 
 
-# Design principles: SOLID, KISS, DRY, YAGNI, GRASP, LoD, SoC
+# Design principles: SOLID, KISS, DRY, YAGNI, GRASP, LoD, SoC, SLA
 
 #### SOLID
 
@@ -2110,7 +2110,7 @@ Rust делает упор на **статический полиморфизм 
 
 The Law of Demeter (LoD) [Закон Деметры](https://backendinterview.ru/architecture/principles.html#%D0%97%D0%B0%D0%BA%D0%BE%D0%BD-%D0%94%D0%B5%D0%BC%D0%B5%D1%82%D1%80%D1%8B)
 
-Принцип Деметры (или Law of Demeter, сокращенно LoD) — это принцип проектирования программного обеспечения, направленный на минимизацию связности между различными компонентами системы. Он также известен как "принцип наименьшего знания".
+Принцип Деметры (или Law of Demeter, сокращенно LoD) — это принцип проектирования программного обеспечения, направленный на минимизацию связности между различными компонентами системы. Он также известен как "принцип наименьшего знания". Объект должен взаимодействовать только с ближайшими соседями (не ходить через цепочки вызовов).
 
 **Суть принципа:**
 Объект должен взаимодействовать только с теми объектами, которые он непосредственно знает и с которыми связан, а не с объектами, которые являются "посредниками" или находятся на уровне глубже.
@@ -2142,6 +2142,43 @@ The Law of Demeter (LoD) [Закон Деметры](https://backendinterview.ru
 Практически, объект-клиент должен избегать вызовов методов объектов, внутренних членов, возвращенных методом объекта-сервиса.
 
 В общем случае можно сказать, что LoD не работает, когда к одному объекту применено более двух точек, например, `object.friend.stranger` вместо `object.friend` или такое нарушение принципа `String cityName = person.getAddress().getCity().getName();`
+
+**Нарушение LoD**
+
+```rust
+struct User {
+    pub account: Account,
+}
+
+struct Account {
+    pub balance: u64,
+}
+
+// Плохо: нарушение LoD (прямой доступ к вложенному полю)
+fn print_user_balance(user: &User) {
+    println!("Balance: {}", user.account.balance); // ❌
+}
+```
+
+**Соблюдение LoD**
+
+```rust
+impl User {
+    pub fn get_balance(&self) -> u64 {
+        self.account.get_balance()  // ✅
+    }
+}
+
+impl Account {
+    pub fn get_balance(&self) -> u64 {
+        self.balance
+    }
+}
+
+fn print_user_balance(user: &User) {
+    println!("Balance: {}", user.get_balance()); // ✅
+}
+```
 
 #### SoC
 
@@ -2184,6 +2221,44 @@ The Law of Demeter (LoD) [Закон Деметры](https://backendinterview.ru
 
 **Итог:**
 **SoC** — это один из ключевых принципов при разработке программного обеспечения, который помогает построить масштабируемую, гибкую и легко поддерживаемую архитектуру. Разделение ответственности способствует уменьшению сложности системы и улучшает её структуру.
+
+#### Single Level of Abstraction (SLA)
+
+Каждая функция/метод должна работать на одном уровне абстракции и не смешивать низкоуровневые и высокоуровневые операции. Часто используется в модульной структуре.
+
+**Нарушение SLA**
+
+```rust
+fn process_data(data: &str) -> Result<(), String> {
+    // Низкоуровневая проверка
+    if data.is_empty() {
+        return Err("Empty data".to_string());
+    }
+
+    // Высокоуровневая логика
+    let parsed = parse_data(data)?;
+
+    // Опять низкоуровневая работа
+    save_to_db(&parsed).map_err(|e| e.to_string())
+}
+```
+
+**Соблюдение SLA**
+
+```rust
+fn process_data(data: &str) -> Result<(), String> {
+    validate_data(data)?;
+    let parsed = parse_data(data)?;
+    store_data(parsed)
+}
+
+// Высокоуровневые шаги
+fn validate_data(data: &str) -> Result<(), String> { ... }
+fn parse_data(data: &str) -> Result<ParsedData, String> { ... }
+fn store_data(data: ParsedData) -> Result<(), String> { ... }
+```
+
+
 
 # Gangs of Four (GoF) Design Patterns
 
@@ -3579,7 +3654,23 @@ P.S. В Rust'е итераторы ленивы, также `std::borrow::Cow` �
 
 `CQRS` (Command Query Responsibility Segregation) — это шаблон проектирования, предлагающий разделение команд (изменяющих данные) и запросов (читающих данные) в приложении. 
 
-Разделение команд-запросов (`CQS`) «Функции не должны вызывать абстрактные побочные эффекты... только команды (процедуры) могут вызывать побочные эффекты». - Бертран Мейер: Объектно-ориентированное создание программного обеспечения
+Принцип **Command-Query Separation (CQS)** разделение команд-запросов «Функции не должны вызывать абстрактные побочные эффекты... только команды (процедуры) могут вызывать побочные эффекты». - Бертран Мейер: Объектно-ориентированное создание программного обеспечения.
+
+CQS - "Метод должен либо изменять состояние объекта (команда), либо возвращать данные (запрос), но не делать оба действия одновременно."
+
+```rust
+impl User {
+    // Команда (изменяет состояние)
+    fn increment_age(&mut self) {
+        self.age += 1;
+    }
+
+    // Запрос (возвращает данные)
+    fn get_age(&self) -> u32 {
+        self.age
+    }
+}
+```
 
 `CQRS` — это стиль архитектуры, в котором операции чтения отделены от операций записи. 
  Подход сформулировал Грег Янг на основе принципа `CQS`, предложенного Бертраном Мейером. 

@@ -2826,6 +2826,96 @@ fn swizzle(e: &mut MultiEnum) {
 
 * ### Итерация по Option
 
+В Rust `Option<T>` можно рассматривать как **контейнер, в котором либо 0, либо 1 элемент**.
+Поскольку `Option` реализует трейты **`IntoIterator`** и **`Iterator` для ссылок**, с ним можно работать так же, как с векторами или другими коллекциями.
+
+<details>
+<summary>...</summary>
+
+**`Option` в `.extend()`**
+
+Если у вас есть коллекция, вы можете добавить в неё элемент из `Option` без `if let`:
+
+```rust
+let turing = Some("Turing");
+let mut logicians = vec!["Curry", "Kleene", "Markov"];
+
+// Добавим элемент, если он есть
+logicians.extend(turing);
+
+// Эквивалентно:
+if let Some(inner) = turing {
+    logicians.push(inner);
+}
+```
+
+
+**`Option` в `.chain()`**
+
+Если хотите добавить элемент в конец существующего итератора:
+
+```rust
+let turing = Some("Turing");
+let logicians = vec!["Curry", "Kleene", "Markov"];
+
+// Склеиваем итератор вектора с итератором Option
+for name in logicians.iter().chain(turing.iter()) {
+    println!("{name} is a logician");
+}
+```
+
+Если элемент **всегда есть**, лучше использовать `std::iter::once`:
+
+```rust
+for name in logicians.iter().chain(std::iter::once(&"Turing")) {
+    println!("{name} is a logician");
+}
+```
+
+
+**`for` по `Option`**
+
+Можно итерироваться по `Option` напрямую в цикле `for`:
+
+```rust
+let opt = Some("Rust");
+
+for value in opt {
+    println!("Value: {value}");
+}
+
+// Эквивалентно:
+if let Some(value) = opt {
+    println!("Value: {value}");
+}
+```
+
+Хотя так можно, **`if let` обычно читается лучше**.
+
+
+**Преобразование `Option` в итератор вручную**
+* `option.into_iter()` — забирает значение из `Option`, потребляя её.
+* `option.iter()` — даёт итератор по ссылке (`&T`).
+* `option.iter_mut()` — даёт итератор по изменяемой ссылке (`&mut T`).
+
+
+```rust
+let mut opt = Some(10);
+
+for x in opt.iter_mut() {
+    *x += 5;
+}
+
+assert_eq!(opt, Some(15));
+```
+ 
+Связанные вещи:
+* **`std::iter::once`** — создаёт итератор с ровно одним элементом (удобно, если точно знаете, что он есть).
+* **`Iterator::filter_map`** — фильтрует и преобразует элементы в `Option`, убирая `None`.
+* **crate `ref_slice`** — умеет превращать `Option<&T>` в слайс длиной 0 или 1.
+
+</details>
+
 * ### [non_exhaustive] и приватные поля для расширяемости
 
 * ### Простая инициализация примера в документации

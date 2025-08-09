@@ -3150,7 +3150,7 @@ pub fn test_connection() -> Connection {
 
 </details>
 
-# [Anti patterns](https://github.com/Jekahome/Patterns/tree/main/anti_patterns)
+# Anti patterns
 
 Есть три большие области, в которых выделяют антипаттерны: разработка, архитектура и управление проектами.
 

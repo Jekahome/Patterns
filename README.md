@@ -1951,9 +1951,9 @@ Rust делает упор на **статический полиморфизм 
 
 ---
 
-# Rust idioms
-
 </details>
+
+# Rust idioms
 
 <details>
 <summary>Rust idioms</summary>

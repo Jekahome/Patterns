@@ -6147,7 +6147,7 @@ impl User {
 
 ---
 
-</details
+</details>
 
 # Refactoring
 

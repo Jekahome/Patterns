@@ -5826,13 +5826,191 @@ Concrete Table Inheritance, Inheritance Mappers).
 
 **Существует четыре основных варианта ленивой загрузки.**
 
+
+| Подход              | Когда грузим                     | Как устроено                                 |
+| ------------------- | -------------------------------- | -------------------------------------------- |
+| Lazy Initialization | При первом доступе к **полю**    | Маркер `None` / `null`                       |
+| Virtual Proxy       | При первом **методе интерфейса** | Прокси с тем же API, создаёт реальный объект |
+| Value Holder        | При первом `getValue()`          | Обёртка с лямбдой-загрузчиком                |
+| Ghost               | При первом методе                | Пустой объект, сразу грузит **все** данные   |
+
+
 1. Lazy Initialization (Ленивая Инициализация) использует специальный макер (обычно null), чтобы пометить поле, как не загруженное. При каждом обращении к полю проверяется значение маркера и, если значение поля не загружено - оно загружается.
 
-2. Virtual Proxy (Виртуальный Прокси) - объект с таким же интерфейсом, как и настоящий объект. При первом обращении к методу объекта, виртуальный прокси загружает настоящий объект и перенаправляет выполнение.
+```rust
+struct Data {
+    value: Option<String>,
+}
 
-3. Value Holder (Контейнер значения) - объект с методом getValue. Клиент вызывает метод getValue, чтобы получить реальный объект. getValue вызывает загрузку.
+impl Data {
+    fn new() -> Self {
+        Self { value: None }
+    }
 
-4. Ghost (Призрак) - объект без каких-либо данных. При первом обращении к его методу, призрак загружает все данные сразу.
+    fn get_value(&mut self) -> &str {
+        if self.value.is_none() {
+            println!("Загружаем данные...");
+            self.value = Some("Hello from DB".to_string());
+        }
+        self.value.as_ref().unwrap()
+    }
+}
+
+fn main() {
+    let mut data = Data::new();
+    println!("Первый доступ: {}", data.get_value());
+    println!("Второй доступ: {}", data.get_value()); // Уже без загрузки
+}
+
+```
+
+2. Virtual Proxy (Виртуальный Прокси) - объект с таким же интерфейсом, как и настоящий объект. При первом обращении к методу объекта, виртуальный прокси загружает настоящий объект и перенаправляет выполнение.  Прокси реализует тот же интерфейс (Service), но создаёт настоящий объект только при первом вызове.
+
+```rust
+trait Service {
+    fn process(&self);
+}
+
+struct RealService {
+    payload: String,
+}
+
+impl RealService {
+    fn new() -> Self {
+        println!("Загружаем реальный объект...");
+        Self { payload: "Real Data".into() }
+    }
+}
+
+impl Service for RealService {
+    fn process(&self) {
+        println!("Обработка: {}", self.payload);
+    }
+}
+
+struct VirtualProxy {
+    real: Option<RealService>,
+}
+
+impl VirtualProxy {
+    fn new() -> Self {
+        Self { real: None }
+    }
+}
+
+impl Service for VirtualProxy {
+    fn process(&self) {
+        if self.real.is_none() {
+            // ❌ Ошибка: self не mut — значит надо менять структуру
+            // решение: сделать RefCell для внутренней мутации
+            println!("Придётся использовать RefCell для ленивой инициализации");
+        }
+    }
+}
+
+fn main() {
+    // Чтобы Virtual Proxy работал без лишнего мута, используем RefCell
+    use std::cell::RefCell;
+
+    struct VirtualProxyCell {
+        real: RefCell<Option<RealService>>,
+    }
+
+    impl VirtualProxyCell {
+        fn new() -> Self {
+            Self { real: RefCell::new(None) }
+        }
+    }
+
+    impl Service for VirtualProxyCell {
+        fn process(&self) {
+            if self.real.borrow().is_none() {
+                let mut r = self.real.borrow_mut();
+                println!("Создаём реальный объект...");
+                *r = Some(RealService::new());
+            }
+            self.real.borrow().as_ref().unwrap().process();
+        }
+    }
+
+    let proxy = VirtualProxyCell::new();
+    proxy.process(); // Создание и вызов
+    proxy.process(); // Уже без создания
+}
+
+```
+
+3. Value Holder (Контейнер значения) - объект с методом getValue. Клиент вызывает метод getValue, чтобы получить реальный объект. getValue вызывает загрузку. Хранится замыкание, которое знает, как получить данные, и само значение.
+
+```rust
+struct ValueHolder<T, F>
+where
+    F: Fn() -> T,
+{
+    value: Option<T>,
+    loader: F,
+}
+
+impl<T, F> ValueHolder<T, F>
+where
+    F: Fn() -> T,
+{
+    fn new(loader: F) -> Self {
+        Self { value: None, loader }
+    }
+
+    fn get_value(&mut self) -> &T {
+        if self.value.is_none() {
+            println!("Загружаем через ValueHolder...");
+            self.value = Some((self.loader)());
+        }
+        self.value.as_ref().unwrap()
+    }
+}
+
+fn main() {
+    let mut holder = ValueHolder::new(|| {
+        println!("Функция загрузки...");
+        "Data from Loader".to_string()
+    });
+
+    println!("{}", holder.get_value()); // первая загрузка
+    println!("{}", holder.get_value()); // уже кэшировано
+}
+
+```
+
+
+4. Ghost (Призрак) - объект без каких-либо данных. При первом обращении к его методу, призрак загружает все данные сразу. Объект пустой при создании, но при первом использовании грузит всю необходимую информацию.
+
+```rust
+struct Ghost {
+    loaded: bool,
+    data: Option<String>,
+}
+
+impl Ghost {
+    fn new() -> Self {
+        Self { loaded: false, data: None }
+    }
+
+    fn process(&mut self) {
+        if !self.loaded {
+            println!("Ghost загружает ВСЕ данные сразу...");
+            self.data = Some("Full dataset".into());
+            self.loaded = true;
+        }
+        println!("Работаем с: {}", self.data.as_ref().unwrap());
+    }
+}
+
+fn main() {
+    let mut ghost = Ghost::new();
+    ghost.process(); // Загружает сразу всё
+    ghost.process(); // Уже использует готовые данные
+}
+
+```
 
 P.S. В Rust'е итераторы ленивы, также `std::borrow::Cow` обладает свойствами бережного обращения к русурсам, и smart pointer `Rc/Arc`
 

@@ -118,6 +118,8 @@
 <details>
 <summary>Советы по понятности</summary>
 
+Есть общее с [KISS](https://github.com/Jekahome/Patterns?tab=readme-ov-file#kiss)
+
 1. **Будьте последовательны**.
    Делайте однотипные вещи одинаково. Последовательность повышает предсказуемость и снижает нагрузку на понимание.
 
@@ -1271,12 +1273,14 @@ $$ M = E - N + 2\cdot P = 7 - 6 + 2 \cdot 1 = 3 $$
   ```rust
   fn main() {
     fn add(x: usize) -> usize {
-        println!("executing add"); // Это выводится, так как функции оцениваются в первую очередь
+        // Это выводится, так как функции оцениваются в первую очередь
+        println!("executing add"); 
         return x + x;
     }
 
     fn multiply(x: usize) -> usize {
-        println!("executing multiply"); // Это выводится, так как функции оцениваются в первую очередь
+        // Это выводится, так как функции оцениваются в первую очередь
+        println!("executing multiply"); 
         return x * x;
     }
 
@@ -1308,16 +1312,18 @@ $$ M = E - N + 2\cdot P = 7 - 6 + 2 \cdot 1 = 3 $$
   ```rust
   fn main() {
     fn add(x: usize) -> usize {
-        println!("executing add"); // this is printed since the functions are evaluated first
+        // это печатается, поскольку функции оцениваются первыми
+        println!("executing add"); 
         return x + x;
     }
     fn multiply(x: usize) -> usize {
-        println!("executing multiply"); // this is printed since the functions are evaluated first
+        // это печатается, поскольку функции оцениваются первыми
+        println!("executing multiply"); 
         return x * x;
     }
     type FnType = fn(t: usize) -> usize;
 
-    // This is now a higher-order-function hence evaluation of the functions are delayed in if-else
+    // Теперь это функция высшего порядка, поэтому оценка функций задерживается в if-else
     fn add_or_multiply(add: bool, on_add: FnType, on_multiply: FnType, t: usize) -> usize {
         if add {
             on_add(t)
@@ -1338,6 +1344,56 @@ $$ M = E - N + 2\cdot P = 7 - 6 + 2 \cdot 1 = 3 $$
   executing multiply
   16
   ```
+
+  Вы также можете использовать методы запоминания / кэширования, чтобы избежать нежелательных оценок в чистых и ссылочных прозрачных функциях, как показано ниже
+
+  ```rust
+    use std::collections::HashMap;
+
+    fn main() {
+        let mut cached_added = HashMap::new();
+
+        let mut add = |x: usize| -> usize {
+            return match cached_added.get(&x) {
+                Some(&val) => val,
+                _ => {
+                    println!("{}", "executing add");
+                    let out = x + x;
+                    cached_added.insert(x, out);
+                    out
+                }
+            };
+        };
+
+        let mut cached_multiplied = HashMap::new();
+
+        let mut multiply = |x: usize| -> usize {
+            return match cached_multiplied.get(&x) {
+                Some(&val) => val,
+                _ => {
+                    println!("executing multiply");
+                    let out = x * x;
+                    cached_multiplied.insert(x, out);
+                    out
+                }
+            };
+        };
+
+        fn add_or_multiply(add: bool, on_add: usize, on_multiply: usize) -> usize {
+            if add {
+                on_add
+            } else {
+                on_multiply
+            }
+        }
+
+        println!("{}", add_or_multiply(true, add(4), multiply(4))); // 8
+        println!("{}", add_or_multiply(false, add(4), multiply(4))); // 16
+    }
+  ```
+
+
+
 
   5. Рекурсия
    
@@ -5769,16 +5825,16 @@ P.S. В Rust'е итераторы ленивы, также `std::borrow::Cow` �
 
 ```rust unimplemented! ```
 
-    Identity Field (Поле первичного ключа)
-    Foreign Key Mapping (Разметка внешних ключей)
-    Association Table Mapping (Разметка таблиц связей)
-    Dependent Mapping (Управление распределением подчинённых сущностей)
-    Embedded Value (Объединённое свойство)
-    Serialized LOB (Сериализованный LOB)
-    Single Table Inheritance (Наследование с единой таблицей)
-    Class Table Inheritance (Наследование с таблицами классов)
-    Concrete Table Inheritance (Наследование с таблицами конечных классов)
-    Inherritance Mappers (Наследуемые распределители)
+- Identity Field (Поле первичного ключа)
+- Foreign Key Mapping (Разметка внешних ключей)
+- Association Table Mapping (Разметка таблиц связей)
+- Dependent Mapping (Управление распределением подчинённых сущностей)
+- Embedded Value (Объединённое свойство)
+- Serialized LOB (Сериализованный LOB)
+- Single Table Inheritance (Наследование с единой таблицей)
+- Class Table Inheritance (Наследование с таблицами классов)
+- Concrete Table Inheritance (Наследование с таблицами конечных классов)
+- Inherritance Mappers (Наследуемые распределители)
 
 
 

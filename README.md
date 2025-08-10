@@ -5523,7 +5523,17 @@ DI помогает снизить уровень связности между 
 
 Шаблоны баз данных, сохранять и извлекать данные из баз данных и устанавливать соответствие между объектами базы данных и приложения.
 
-- ## ActiveRecord	
+- Active Record
+- Identity Map
+- Data Mapper
+- Repository
+- Unit of Work (UOW)
+- Lazy Load
+
+<details>
+<summary>...</summary>
+
+- ## Active Record	
 
 ```rust unimplemented! ```
 
@@ -5751,6 +5761,10 @@ P.S. В Rust'е итераторы ленивы, также `std::borrow::Cow` �
 
 [Lazy Load](http://design-pattern.ru/patterns/lazy-load.html)
 
+---
+
+</details>
+
 ## [Паттерны Объектно-Реляционного структурирования](http://design-pattern.ru/patterns/)
 
 ```rust unimplemented! ```
@@ -5765,6 +5779,9 @@ P.S. В Rust'е итераторы ленивы, также `std::borrow::Cow` �
     Class Table Inheritance (Наследование с таблицами классов)
     Concrete Table Inheritance (Наследование с таблицами конечных классов)
     Inherritance Mappers (Наследуемые распределители)
+
+
+
 
 
 # [Architecture](https://martinfowler.com/architecture/)

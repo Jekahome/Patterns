@@ -4416,6 +4416,9 @@ fn store_data(data: ParsedData) -> Result<(), String> { ... }
 Паттерны которые создают новые объекты, или позволяют получить доступ к уже существующим. 
 То есть те шаблоны, по которым можно создать новый автомобиль и как это лучше сделать.
 
+<details>
+<summary>...</summary>
+
 - ## Builder	
 
 `Pattern Builder` — это шаблон проектирования, который позволяет шаг за шагом создавать сложные объекты. Он позволяет создавать разные типы и представления объекта, используя один и тот же код построения, отделяя построение сложного объекта от его представления.
@@ -4590,9 +4593,16 @@ fn store_data(data: ParsedData) -> Result<(), String> { ... }
 
 [Singleton refactoring.guru](https://refactoring.guru/design-patterns/singleton/rust/example#example-1)
 
+---
+
+</details>
+
 ## <ins>Структурирующие паттерны</ins>
 
 Данные паттерны помогают внести порядок и научить разные объекты более правильно взаимодействовать друг с другом.
+
+<details>
+<summary>...</summary>
 
 - ## Adapter	
 
@@ -4880,9 +4890,16 @@ File и Directory оба trait Component имеют один search метод.
 
 [Flyweight + картинка](https://github.com/fadeevab/design-patterns-rust/blob/main/structural/flyweight/)
 
+---
+
+</details>
+
 ## <ins>Паттерны поведения</ins>
 
 Эта группа паттернов позволяет структурировать подходы к обработке поведения и взаимодействия объектов. Проще говоря, как должны проходить процессы в которых существует несколько вариантов протекания событий.
+
+<details>
+<summary>...</summary>
 
 - ## Command	
 
@@ -5394,6 +5411,10 @@ middleware
 [Template method refactoring.guru](https://refactoring.guru/ru/design-patterns/template-method)
 
 [Template method www.sourcecodeexamples.net](https://www.sourcecodeexamples.net/2023/10/template-method-design-pattern-in-rust.html)
+
+---
+
+</details>
 
 # Other Design Patterns
  

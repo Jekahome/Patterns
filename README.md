@@ -5472,6 +5472,14 @@ middleware
 
 </details>
 
+[Rust Design Patterns](https://chercher.tech/rust/observer-design-pattern-rust)
+
+[Паттерны проектирования](http://design-pattern.ru/patterns/)
+
+[Каталог шаблонов архитектуры корпоративных приложений](https://martinfowler.com/eaaCatalog/index.html)
+
+[Паттерны ООП в метафорах](https://habr.com/ru/articles/136766/)
+
 # Other Design Patterns
 - Object Pool Pattern
 - Private Class Data	
@@ -6262,15 +6270,7 @@ impl User {
 
 [Rust Design Patterns refactoring.guru](https://refactoring.guru/ru/design-patterns/rust)
 
-### OOP Patterns
 
-[Rust Design Patterns](https://chercher.tech/rust/observer-design-pattern-rust)
-
-[Паттерны проектирования](http://design-pattern.ru/patterns/)
-
-[Каталог шаблонов архитектуры корпоративных приложений](https://martinfowler.com/eaaCatalog/index.html)
-
-[Паттерны ООП в метафорах](https://habr.com/ru/articles/136766/)
 
 
  

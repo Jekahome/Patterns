@@ -5850,21 +5850,21 @@ P.S. В Rust'е итераторы ленивы, также `std::borrow::Cow` �
 
 **Puplish-Subscribe**
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 **Event-Driven**
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 ### Distributed
 
 **Client-Server**
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 **Peer-to-Peer**
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 Архитектура "peer-to-peer" (P2P) представляет собой распределенную архитектурную модель, в которой каждый участник сети (пир) может одновременно выполнять роль как клиента, так и сервера. В такой сети нет центрального управляющего узла или сервера. Вместо этого каждый узел взаимодействует непосредственно с другими узлами, обмениваясь ресурсами, информацией или услугами.
 
@@ -5886,15 +5886,15 @@ P.S. В Rust'е итераторы ленивы, также `std::borrow::Cow` �
 
 ## Architectural Pattern Model View Controller(MVC)
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 ## [Architectural Pattern Microservices](https://backendinterview.ru/architecture/microserices/index.html)
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 ## [Architectural Pattern Event Sourcing](https://backendinterview.ru/architecture/architecturesPatterns.html#event-sourcing)
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 ## Architectural Pattern CQRS
 
@@ -5962,7 +5962,7 @@ impl User {
 
 ## Architectural Pattern Domain-Driven Design (DDD) 
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 `DDD` означает "Domain-Driven Design" (Проектирование с учетом предметной области) и представляет собой методологию и набор принципов, разработанных Эриком Эвансом. 
 `DDD` ориентировано на решение сложных задач в области проектирования программного обеспечения, особенно там, где ключевой упор делается на моделирование предметной области.
@@ -5998,7 +5998,7 @@ impl User {
 
 ## Layered architecture 
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 Слоенная архитектура (Layered Architecture) - это структурный подход к организации кода, в котором приложение разделяется на логические слои (или уровни), 
 каждый из которых выполняет определенные функции. 
@@ -6068,7 +6068,7 @@ impl User {
 
 ## Hexagonal Architecture (Шестиугольная архитектура)
 
-```rust unimplemented!```
+`TODO: добавить больше информации, пример, пояснение`
 
 `Hexagonal Architecture` (Шестиугольная архитектура), также известная как Ports and Adapters (Порты и Адаптеры), это паттерн архитектуры, предложенный Алистером Кокберном. 
 Он призван обеспечить легкость тестирования, гибкость и отделение бизнес-логики от деталей инфраструктуры.

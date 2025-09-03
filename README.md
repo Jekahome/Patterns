@@ -5,11 +5,11 @@
 * [Семантическая и цикломатическая сложность кода](https://github.com/Jekahome/Patterns?tab=readme-ov-file#%D1%81%D0%B5%D0%BC%D0%B0%D0%BD%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F-%D0%B8-%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F-%D1%81%D0%BB%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C-%D0%BA%D0%BE%D0%B4%D0%B0)
 * [Programming Paradigms](https://github.com/Jekahome/Patterns#programming-paradigms)
 * [Подходят ли ООП паттерны для Rust?](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D0%B4%D1%85%D0%BE%D0%B4%D1%8F%D1%82-%D0%BB%D0%B8-%D0%BE%D0%BE%D0%BF-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%B4%D0%BB%D1%8F-rust)
-   * 1. [ООП vs Rust: Ключевые отличия]()
-   * 2. [Когда ООП-паттерны **не нужны** в Rust]()
-   * 3. [Когда ООП-паттерны **полезны** в Rust]()
-   * 4. [Функциональные альтернативы в Rust]()
-   * 5. [Виды полиморфизма]()
+   * 1. [ООП vs Rust: Ключевые отличия](https://github.com/Jekahome/Patterns?tab=readme-ov-file#1-%D0%BE%D0%BE%D0%BF-vs-rust-%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B2%D1%8B%D0%B5-%D0%BE%D1%82%D0%BB%D0%B8%D1%87%D0%B8%D1%8F)
+   * 2. [Когда ООП-паттерны **не нужны** в Rust](https://github.com/Jekahome/Patterns?tab=readme-ov-file#2-%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0-%D0%BE%D0%BE%D0%BF-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%BD%D0%B5-%D0%BD%D1%83%D0%B6%D0%BD%D1%8B-%D0%B2-rust)
+   * 3. [Когда ООП-паттерны **полезны** в Rust](https://github.com/Jekahome/Patterns?tab=readme-ov-file#3-%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0-%D0%BE%D0%BE%D0%BF-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B-%D0%B2-rust)
+   * 4. [Функциональные альтернативы в Rust](https://github.com/Jekahome/Patterns?tab=readme-ov-file#4-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D0%B0%D0%BB%D1%8C%D1%82%D0%B5%D1%80%D0%BD%D0%B0%D1%82%D0%B8%D0%B2%D1%8B-%D0%B2-rust)
+   * 5. [Виды полиморфизма](https://github.com/Jekahome/Patterns?tab=readme-ov-file#5-%D0%B2%D0%B8%D0%B4%D1%8B-%D0%BF%D0%BE%D0%BB%D0%B8%D0%BC%D0%BE%D1%80%D1%84%D0%B8%D0%B7%D0%BC%D0%B0)
 * [Rust idioms](https://github.com/Jekahome/Patterns#rust-idioms)
 * [Anti patterns](https://github.com/Jekahome/Patterns#anti-patterns)
 * [Design principles](https://github.com/Jekahome/Patterns?tab=readme-ov-file#design-principles-solid-kiss-dry-yagni-grasp-lod-soc-sla): [SOLID](https://github.com/Jekahome/Patterns?tab=readme-ov-file#solid), [KISS](https://github.com/Jekahome/Patterns?tab=readme-ov-file#kiss), [DRY](https://github.com/Jekahome/Patterns?tab=readme-ov-file#dry), [YAGNI](https://github.com/Jekahome/Patterns?tab=readme-ov-file#yagni), [GRASP](https://github.com/Jekahome/Patterns?tab=readme-ov-file#grasp), [LoD](https://github.com/Jekahome/Patterns?tab=readme-ov-file#lod), [SoC](https://github.com/Jekahome/Patterns?tab=readme-ov-file#soc)
@@ -1870,7 +1870,6 @@ fn area(s: Shape) -> f64 {
 В Rust параметр универсального типа создает то, что в функциональных языках называется «**ограничением класса типа**».
 Это называется **мономорфизацией**, когда разные типы создаются из полиморфного кода.
 
-</details>
 
 ## 5. Виды полиморфизма
 

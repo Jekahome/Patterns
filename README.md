@@ -5,6 +5,11 @@
 * [Семантическая и цикломатическая сложность кода](https://github.com/Jekahome/Patterns?tab=readme-ov-file#%D1%81%D0%B5%D0%BC%D0%B0%D0%BD%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F-%D0%B8-%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F-%D1%81%D0%BB%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C-%D0%BA%D0%BE%D0%B4%D0%B0)
 * [Programming Paradigms](https://github.com/Jekahome/Patterns#programming-paradigms)
 * [Подходят ли ООП паттерны для Rust?](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D0%B4%D1%85%D0%BE%D0%B4%D1%8F%D1%82-%D0%BB%D0%B8-%D0%BE%D0%BE%D0%BF-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%B4%D0%BB%D1%8F-rust)
+   * 1. [ООП vs Rust: Ключевые отличия]()
+   * 2. [Когда ООП-паттерны **не нужны** в Rust]()
+   * 3. [Когда ООП-паттерны **полезны** в Rust]()
+   * 4. [Функциональные альтернативы в Rust]()
+   * 5. [Виды полиморфизма]()
 * [Rust idioms](https://github.com/Jekahome/Patterns#rust-idioms)
 * [Anti patterns](https://github.com/Jekahome/Patterns#anti-patterns)
 * [Design principles](https://github.com/Jekahome/Patterns?tab=readme-ov-file#design-principles-solid-kiss-dry-yagni-grasp-lod-soc-sla): [SOLID](https://github.com/Jekahome/Patterns?tab=readme-ov-file#solid), [KISS](https://github.com/Jekahome/Patterns?tab=readme-ov-file#kiss), [DRY](https://github.com/Jekahome/Patterns?tab=readme-ov-file#dry), [YAGNI](https://github.com/Jekahome/Patterns?tab=readme-ov-file#yagni), [GRASP](https://github.com/Jekahome/Patterns?tab=readme-ov-file#grasp), [LoD](https://github.com/Jekahome/Patterns?tab=readme-ov-file#lod), [SoC](https://github.com/Jekahome/Patterns?tab=readme-ov-file#soc)
@@ -1865,9 +1870,11 @@ fn area(s: Shape) -> f64 {
 В Rust параметр универсального типа создает то, что в функциональных языках называется «**ограничением класса типа**».
 Это называется **мономорфизацией**, когда разные типы создаются из полиморфного кода.
 
-## Виды полиморфизма
+</details>
 
-Паттеены Null Object, Strategy, Adapter, Decorator, Composite, Proxy, State — все это просто разновидности применения полиморфизма.
+## 5. Виды полиморфизма
+
+Паттерны: Null Object, Strategy, Adapter, Decorator, Composite, Proxy, State — все это просто разновидности применения полиморфизма.
   
 - **Null Object** — избегание null проверок
 - **Strategy** — смена алгоритмов
@@ -1879,7 +1886,7 @@ fn area(s: Shape) -> f64 {
 
 
 <details>
-<summary>1. **Null Object** — полиморфизм для отсутствия поведения</summary>
+<summary>1. Null Object — полиморфизм для отсутствия поведения</summary>
 
 ```rust
 trait Logger {
@@ -1914,7 +1921,7 @@ fn process(logger: &impl Logger) {
 
 
 <details>
-<summary>2. **Strategy** — полиморфизм для замены алгоритмов</summary>
+<summary>2. Strategy — полиморфизм для замены алгоритмов</summary>
 
 ```rust
 trait SortingStrategy {
@@ -1946,7 +1953,7 @@ struct Sorter {
 
 
 <details>
-<summary>3. **Adapter** — полиморфизм для совместимости интерфейсов</summary>
+<summary>3. Adapter — полиморфизм для совместимости интерфейсов</summary>
 
 ```rust
 // Старый интерфейс
@@ -1977,7 +1984,7 @@ impl NewService for Adapter {
 
 
 <details>
-<summary>4. **Decorator** — полиморфизм для добавления функциональности</summary>
+<summary>4. Decorator — полиморфизм для добавления функциональности</summary>
 
 ```rust
 trait Coffee {
@@ -2008,7 +2015,7 @@ impl Coffee for MilkDecorator {
 
 
 <details>
-<summary>5. **Composite** — полиморфизм для древовидных структур</summary>
+<summary>5. Composite — полиморфизм для древовидных структур</summary>
 
 ```rust
 trait Graphic {
@@ -2043,7 +2050,7 @@ impl Graphic for Picture {
 
 
 <details>
-<summary>6. **Proxy** — полиморфизм для контроля доступа</summary>
+<summary>6. Proxy — полиморфизм для контроля доступа</summary>
 
 ```rust
 trait Database {
@@ -2079,7 +2086,7 @@ impl Database for DatabaseProxy {
 
 
 <details>
-<summary>7. **State** — полиморфизм для изменения поведения</summary>
+<summary>7. State — полиморфизм для изменения поведения</summary>
  
 ```rust
 trait State {

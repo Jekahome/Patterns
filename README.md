@@ -12,7 +12,17 @@
    * [Виды полиморфизма](https://github.com/Jekahome/Patterns?tab=readme-ov-file#5-%D0%B2%D0%B8%D0%B4%D1%8B-%D0%BF%D0%BE%D0%BB%D0%B8%D0%BC%D0%BE%D1%80%D1%84%D0%B8%D0%B7%D0%BC%D0%B0)
 * [Rust idioms](https://github.com/Jekahome/Patterns#rust-idioms)
 * [Anti patterns](https://github.com/Jekahome/Patterns#anti-patterns)
-* [Design principles](https://github.com/Jekahome/Patterns?tab=readme-ov-file#design-principles-solid-kiss-dry-yagni-grasp-lod-soc-sla): [SOLID](https://github.com/Jekahome/Patterns?tab=readme-ov-file#solid), [KISS](https://github.com/Jekahome/Patterns?tab=readme-ov-file#kiss), [DRY](https://github.com/Jekahome/Patterns?tab=readme-ov-file#dry), [YAGNI](https://github.com/Jekahome/Patterns?tab=readme-ov-file#yagni), [GRASP](https://github.com/Jekahome/Patterns?tab=readme-ov-file#grasp), [LoD](https://github.com/Jekahome/Patterns?tab=readme-ov-file#lod), [SoC](https://github.com/Jekahome/Patterns?tab=readme-ov-file#soc)
+* [Design principles](https://github.com/Jekahome/Patterns?tab=readme-ov-file#design-principles-solid-kiss-dry-yagni-grasp-lod-soc-sla): 
+   * [SOLID](https://github.com/Jekahome/Patterns?tab=readme-ov-file#solid), 
+   * [KISS](https://github.com/Jekahome/Patterns?tab=readme-ov-file#kiss), 
+   * [DRY](https://github.com/Jekahome/Patterns?tab=readme-ov-file#dry), 
+   * [YAGNI](https://github.com/Jekahome/Patterns?tab=readme-ov-file#yagni), 
+   * [GRASP](https://github.com/Jekahome/Patterns?tab=readme-ov-file#grasp), 
+   * [LoD](https://github.com/Jekahome/Patterns?tab=readme-ov-file#lod), 
+   * [SoC](https://github.com/Jekahome/Patterns?tab=readme-ov-file#soc)
+   * [Single Level of Abstraction (SLA)](https://github.com/Jekahome/Patterns?tab=readme-ov-file#single-level-of-abstraction-sla)
+   * [Command-Query Separation (CQS)]()
+[Single level of abstraction]()
 * [Gangs of Four (GoF) Design Patterns](https://github.com/Jekahome/Patterns#gangs-of-four-gof-design-patterns)
    * [Порождающие паттерны](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D1%80%D0%BE%D0%B6%D0%B4%D0%B0%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)
    * [Структурирующие паттерны](https://github.com/Jekahome/Patterns#%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)
@@ -4749,6 +4759,92 @@ fn store_data(data: ParsedData) -> Result<(), String> { ... }
 
 </details>
 
+## Command-Query Separation (CQS)
+
+CQS — это принцип проектирования методов, который можно и нужно использовать практически везде, предложенный Бертраном Мейером, который разделяет методы на две категории:
+* Команды (Commands) — изменяют состояние, но не возвращают данные
+* Запросы (Queries) — возвращают данные, но не изменяют состояние
+
+**Метод должен быть либо командой, либо запросом, но не обоими одновременно.**
+
+<details>
+<summary>...</summary>
+
+**Преимущества CQS**
+* Предсказуемость кода (ясно когда изменяется состояние)
+* Безопасность в многопоточности (запросы можно вызывать из нескольких потоков без блокировок)
+* Упрощение тестирования
+
+❌ Нарушение CQS
+
+```rust
+// ПЛОХО: метод и изменяет состояние, и возвращает значение
+struct BankAccount {
+    balance: f64,
+}
+
+impl BankAccount {
+    fn withdraw(&mut self, amount: f64) -> f64 {
+        self.balance -= amount;
+        self.balance // Нарушение: и команда, и запрос
+    }
+}
+```
+
+✅ Соблюдение CQS
+
+
+```rust
+// ХОРОШО: разделение на команду и запрос
+struct BankAccount {
+    balance: f64,
+}
+
+impl BankAccount {
+    // КОМАНДА: изменяет состояние, ничего не возвращает
+    fn withdraw(&mut self, amount: f64) {
+        self.balance -= amount;
+    }
+    
+    // ЗАПРОС: возвращает данные, не изменяет состояние
+    fn get_balance(&self) -> f64 {
+        self.balance
+    }
+}
+```
+
+**Исключения из правила**:
+* Создание объектов (фабричные методы)
+
+```rust
+impl User {
+    // Исключение: создание объекта обычно возвращает его
+    fn new(name: &str) -> Self {
+        Self {
+            id: generate_id(),
+            name: name.to_string(),
+        }
+    }
+}
+```
+
+* 2. Операции с очевидными побочными эффектами
+
+
+```rust
+struct Logger;
+impl Logger {
+    // Запись в лог - и команда, и может возвращать статус
+    fn log(&mut self, message: &str) -> Result<(), IoError> {
+        println!("{}", message);
+        Ok(())
+    }
+}
+```
+
+</details>
+
+
 
 # Gangs of Four (GoF) Design Patterns
 
@@ -6389,22 +6485,71 @@ P.S. В Rust'е итераторы ленивы, также `std::borrow::Cow` �
 
 CQS - "Метод должен либо изменять состояние объекта (команда), либо возвращать данные (запрос), но не делать оба действия одновременно."
 
-<details>
-<summary>...</summary>
+CQS и CQRS — **это разные**, хотя и связанные концепции. CQS действует на уровне методов/обьектов для поддержания частоты кода и не нуждается в синхронизации данных так как все в одном объекте, а CQRS на архитектурном уровне всей системы для масштабируемости и требует явной синхронизации данных. CQS является основой для понимания CQRS, но они решают разные задачи на разных уровнях абстракции.
+
+Архитектурный паттерн CQRS разделения на разные модели:
 
 ```rust
-impl User {
-    // Команда (изменяет состояние)
-    fn increment_age(&mut self) {
-        self.age += 1;
-    }
+// CQRS - разные модели для команд и запросов
 
-    // Запрос (возвращает данные)
-    fn get_age(&self) -> u32 {
-        self.age
+// МОДЕЛЬ КОМАНД (для записи)
+struct BankAccountWrite {
+    balance: f64,
+}
+
+impl BankAccountWrite {
+    fn new() -> Self {
+        Self { balance: 0.0 }
+    }
+    
+    fn deposit(&mut self, amount: f64) {
+        self.balance += amount;
+        // Здесь может быть сложная бизнес-логика
+    }
+    
+    fn withdraw(&mut self, amount: f64) -> Result<(), String> {
+        if amount > self.balance {
+            return Err("Insufficient funds".to_string());
+        }
+        self.balance -= amount;
+        Ok(())
+    }
+}
+
+// МОДЕЛЬ ЗАПРОСОВ (для чтения)
+struct BankAccountRead {
+    account_id: u64,
+    balance: f64,
+    last_transactions: Vec<Transaction>,
+}
+
+impl BankAccountRead {
+    fn get_balance(&self) -> f64 {
+        self.balance
+    }
+    
+    fn get_transaction_history(&self) -> &[Transaction] {
+        &self.last_transactions
+    }
+    
+    fn get_account_details(&self) -> AccountDetails {
+        // Комплексные данные для UI
+    }
+}
+
+// Синхронизация между моделями (через события)
+struct AccountEventPublisher {
+    // Отправка событий о изменениях
+}
+
+impl AccountEventPublisher {
+    fn publish_deposit_event(&self, account_id: u64, amount: f64) {
+        // Отправка в систему сообщений
     }
 }
 ```
+
+
 
 `CQRS` — это стиль архитектуры, в котором операции чтения отделены от операций записи. 
  Подход сформулировал Грег Янг на основе принципа `CQS`, предложенного Бертраном Мейером. 

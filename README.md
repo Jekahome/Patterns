@@ -21,8 +21,7 @@
    * [LoD](https://github.com/Jekahome/Patterns?tab=readme-ov-file#lod), 
    * [SoC](https://github.com/Jekahome/Patterns?tab=readme-ov-file#soc)
    * [Single Level of Abstraction (SLA)](https://github.com/Jekahome/Patterns?tab=readme-ov-file#single-level-of-abstraction-sla)
-   * [Command-Query Separation (CQS)]()
-[Single level of abstraction]()
+   * [Command-Query Separation (CQS)](https://github.com/Jekahome/Patterns?tab=readme-ov-file#command-query-separation-cqs)
 * [Gangs of Four (GoF) Design Patterns](https://github.com/Jekahome/Patterns#gangs-of-four-gof-design-patterns)
    * [Порождающие паттерны](https://github.com/Jekahome/Patterns#%D0%BF%D0%BE%D1%80%D0%BE%D0%B6%D0%B4%D0%B0%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)
    * [Структурирующие паттерны](https://github.com/Jekahome/Patterns#%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B8%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B)

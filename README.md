@@ -1865,7 +1865,254 @@ fn area(s: Shape) -> f64 {
 В Rust параметр универсального типа создает то, что в функциональных языках называется «**ограничением класса типа**».
 Это называется **мономорфизацией**, когда разные типы создаются из полиморфного кода.
 
+## Виды полиморфизма
+
+Паттеены Null Object, Strategy, Adapter, Decorator, Composite, Proxy, State — все это просто разновидности применения полиморфизма.
   
+- **Null Object** — избегание null проверок
+- **Strategy** — смена алгоритмов
+- **Adapter** — совместимость интерфейсов  
+- **Decorator** — динамическое расширение функциональности
+- **Composite** — работа с иерархиями
+- **Proxy** — контроль доступа и ленивая инициализация
+- **State** — изменение поведения объекта
+
+
+<details>
+<summary>1. **Null Object** — полиморфизм для отсутствия поведения</summary>
+
+```rust
+trait Logger {
+    fn log(&self, message: &str);
+}
+
+// Реальный логгер
+struct RealLogger;
+impl Logger for RealLogger {
+    fn log(&self, message: &str) {
+        println!("LOG: {}", message);
+    }
+}
+
+// Null-объект
+struct NullLogger;
+impl Logger for NullLogger {
+    fn log(&self, _message: &str) {
+        // Ничего не делаем
+    }
+}
+
+// Использование через полиморфизм
+fn process(logger: &impl Logger) {
+    logger.log("processing...");
+}
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>2. **Strategy** — полиморфизм для замены алгоритмов</summary>
+
+```rust
+trait SortingStrategy {
+    fn sort(&self, data: &mut [i32]);
+}
+
+struct QuickSort;
+impl SortingStrategy for QuickSort {
+    fn sort(&self, data: &mut [i32]) {
+        // Быстрая сортировка
+    }
+}
+
+struct BubbleSort;
+impl SortingStrategy for BubbleSort {
+    fn sort(&self, data: &mut [i32]) {
+        // Пузырьковая сортировка
+    }
+}
+
+struct Sorter {
+    strategy: Box<dyn SortingStrategy>,
+}
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>3. **Adapter** — полиморфизм для совместимости интерфейсов</summary>
+
+```rust
+// Старый интерфейс
+trait OldService {
+    fn old_method(&self);
+}
+
+// Новый интерфейс  
+trait NewService {
+    fn new_method(&self);
+}
+
+// Адаптер - реализует новый интерфейс через старый
+struct Adapter {
+    old_service: Box<dyn OldService>,
+}
+
+impl NewService for Adapter {
+    fn new_method(&self) {
+        self.old_service.old_method(); // Адаптация
+    }
+}
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>4. **Decorator** — полиморфизм для добавления функциональности</summary>
+
+```rust
+trait Coffee {
+    fn cost(&self) -> f64;
+}
+
+struct SimpleCoffee;
+impl Coffee for SimpleCoffee {
+    fn cost(&self) -> f64 {
+        2.0
+    }
+}
+
+struct MilkDecorator {
+    coffee: Box<dyn Coffee>,
+}
+
+impl Coffee for MilkDecorator {
+    fn cost(&self) -> f64 {
+        self.coffee.cost() + 0.5 // Добавляем функциональность
+    }
+}
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>5. **Composite** — полиморфизм для древовидных структур</summary>
+
+```rust
+trait Graphic {
+    fn draw(&self);
+}
+
+// Лист
+struct Circle;
+impl Graphic for Circle {
+    fn draw(&self) {
+        println!("Drawing circle");
+    }
+}
+
+// Композит - содержит другие Graphic
+struct Picture {
+    children: Vec<Box<dyn Graphic>>,
+}
+
+impl Graphic for Picture {
+    fn draw(&self) {
+        for child in &self.children {
+            child.draw(); // Рекурсивный вызов
+        }
+    }
+}
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>6. **Proxy** — полиморфизм для контроля доступа</summary>
+
+```rust
+trait Database {
+    fn query(&self, sql: &str) -> Result<(), String>;
+}
+
+struct RealDatabase;
+impl Database for RealDatabase {
+    fn query(&self, sql: &str) -> Result<(), String> {
+        println!("Executing: {}", sql);
+        Ok(())
+    }
+}
+
+struct DatabaseProxy {
+    database: RealDatabase,
+    has_access: bool,
+}
+
+impl Database for DatabaseProxy {
+    fn query(&self, sql: &str) -> Result<(), String> {
+        if !self.has_access {
+            return Err("Access denied".to_string());
+        }
+        self.database.query(sql) // Делегирование
+    }
+}
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>7. **State** — полиморфизм для изменения поведения</summary>
+ 
+```rust
+trait State {
+    fn handle(&self, context: &mut Context);
+}
+
+struct StateA;
+impl State for StateA {
+    fn handle(&self, context: &mut Context) {
+        println!("State A handling");
+        context.set_state(Box::new(StateB));
+    }
+}
+
+struct StateB; 
+impl State for StateB {
+    fn handle(&self, context: &mut Context) {
+        println!("State B handling");
+        context.set_state(Box::new(StateA));
+    }
+}
+
+struct Context {
+    state: Box<dyn State>,
+}
+```
+
+---
+
+</details>
+
+
+
 ### 1. Параметрический полиморфизм (Generics)  
 **Есть**  
 - Rust поддерживает обобщённое программирование через **Generics**.  

@@ -1,3 +1,5 @@
+[![Hits-of-Code](https://hitsofcode.com/github/Jekahome/Patterns)](https://hitsofcode.com/github/Jekahome/Patterns/view)
+
 # Topics
 
 * [Что такое паттерны, зачем и почему?](https://github.com/Jekahome/Patterns#%D1%87%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-%D0%BF%D0%B0%D1%82%D1%82%D0%B5%D1%80%D0%BD%D1%8B-%D0%B7%D0%B0%D1%87%D0%B5%D0%BC-%D0%B8-%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83)

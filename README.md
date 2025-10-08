@@ -1,4 +1,4 @@
-[![Hits-of-Code](https://hitsofcode.com/github/Jekahome/Patterns?branch=master)](https://hitsofcode.com/github/Jekahome/Patterns/view?branch=master)
+[![Hits-of-Code](https://hitsofcode.com/github/Jekahome/Patterns?branch=main)](https://hitsofcode.com/github/Jekahome/Patterns/view?branch=main)
 
 # Topics
 

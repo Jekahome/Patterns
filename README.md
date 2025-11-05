@@ -7162,7 +7162,7 @@ impl AccountEventPublisher {
 
 Рефакторинг — это процесс изменения программного кода с целью улучшения его структуры, читаемости, поддерживаемости и производительности, при этом без изменения его внешнего поведения, но с устранением [`code smells`](https://github.com/Jekahome/Patterns/tree/main?tab=readme-ov-file#code-smells) (плохих практик) и [`антипаттернов`](https://github.com/Jekahome/Patterns/tree/main?tab=readme-ov-file#anti-patterns) (неэффективных решений). Рефакторинг позволяет разработчикам вносить изменения в программу, не нарушая функциональность и улучшая качество.
   
-[Refactoring.md](https://refactoring.com/)
+[Refactoring.md](https://github.com/Jekahome/Patterns/blob/main/Refactoring.md)
  
 
 # Квадрант технического долга по Мартину Фаулеру

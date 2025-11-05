@@ -252,11 +252,11 @@
 
  
 
-[Refactoring](https://refactoring.com/)
+[refactoring.com](https://refactoring.com/)
 
-[Refactoring](https://refactoring.guru/ru/refactoring)
+[refactoring.guru](https://refactoring.guru/ru/refactoring)
 
-[Refactoring](https://sourcemaking.com/refactoring)
+[sourcemaking.com](https://sourcemaking.com/refactoring)
 
-[Что такое рефакторинг?](https://foxminded.ua/ru/refaktoring/)
+[Что такое рефакторинг? (foxminded.ua)](https://foxminded.ua/ru/refaktoring/)
 

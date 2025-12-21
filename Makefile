@@ -7,7 +7,8 @@ commit:
 		echo ">>> Обнаружены изменения, делаю коммит..."; \
 		git add .; \
 		if [ -z "$1" ]; then \
-			git commit --allow-empty-message -m ""; \
+			DATE_STR="$$(date '+%Y-%m-%d %H:%M:%S')"; \
+			git commit -m "$$DATE_STR"; \
 		else \
 			git commit -m "$1"; \
 		fi; \

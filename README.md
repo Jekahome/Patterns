@@ -7146,22 +7146,12 @@ impl AccountEventPublisher {
 
 [Technical_Debt_Quadrant.md](/Technical_Debt_Quadrant.md)
 
- 
-
 # CAP-теорема
 
-### CAP-теорема (Consistency, Availability, Partition Tolerance)  
-Это фундаментальная теорема в распределённых системах, сформулированная **Эриком Брюером** в 2000 году. Она утверждает, что в **распределённой базе данных** невозможно одновременно обеспечить три свойства:  
-1. **Consistency (Согласованность)** — все узлы системы видят одни и те же данные в одно и то же время.  
-2. **Availability (Доступность)** — каждый запрос получает ответ (может быть не самым свежим).  
-3. **Partition Tolerance (Устойчивость к разделению)** — система продолжает работать, даже если соединение между узлами разорвано.  
-
-### Вывод CAP-теоремы  
-В реальной системе можно добиться **только двух из трёх** свойств:  
-- **CP (Consistency + Partition Tolerance)** — данные всегда согласованы, но могут быть недоступны в случае разделения сети. (Пример: **MongoDB в режиме строгой консистентности**)  
-- **AP (Availability + Partition Tolerance)** — система всегда доступна, но данные могут быть несогласованными. (Пример: **Cassandra, DynamoDB**)  
-- **CA (Consistency + Availability)** — невозможен в распределённых системах, так как при сетевых сбоях одно из свойств обязательно будет нарушено.  
-
+CAP-теорема (Consistency, Availability, Partition Tolerance) это фундаментальная теорема в распределённых системах ...
+ 
+[CAP_theorem.md](/CAP_theorem.md)
+ 
 ## Sources
 * [Rust Design Patterns rust-unofficial](https://rust-unofficial.github.io/patterns/)
 * [Rust Design Patterns github.com/rust-unofficial](https://github.com/rust-unofficial/patterns)

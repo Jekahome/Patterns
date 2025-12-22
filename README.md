@@ -7144,7 +7144,7 @@ impl AccountEventPublisher {
 
 Мартин Фаулер, известный эксперт в области разработки программного обеспечения, предложил модель квадранта технического долга, которая помогает классифицировать виды технического долга на основе двух критериев:
 
-[Technical_Debt_Quadrant.md](https://github.com/Jekahome/Patterns/Technical_Debt_Quadrant.md)
+[Technical_Debt_Quadrant.md](/Technical_Debt_Quadrant.md)
 
  
 
